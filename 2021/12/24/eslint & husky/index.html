@@ -11,38 +11,34 @@
   <meta charset="utf-8">
 
   
-  <title>All Posts - Mett Li</title>
+  <title>eslint &amp; husky</title>
   
-  <link rel="canonical" href="http://example.com/archives/2022/01/">
+  <link rel="canonical" href="http://example.com/2021/12/24/eslint%20&amp;%20husky/">
   
-  <meta name="description" content="">
+  <meta name="description" content="很简单，执行如下命令： 1npx eslint --init  该命令会提供一个命令行选择界面，根据你的选择来生成 eslint 配置文件，并自动安装 eslint 以及所需的其他插件。 husky前置知识：git hooks 详解  基本用法husky 对 git hooks 进行了封装，使我们能">
   
   
   <meta name="author" content="Mett Li">
   
   
-  <meta property="og:image" content="http://example.com/images/thumbnail.jpg">
-  
   
   <meta property="og:site_name" content="Hexo" />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="All Posts - Mett Li" />
+  <meta property="og:title" content="eslint &amp; husky" />
   
-  <meta property="og:description" content="">
+  <meta property="og:description" content="很简单，执行如下命令： 1npx eslint --init  该命令会提供一个命令行选择界面，根据你的选择来生成 eslint 配置文件，并自动安装 eslint 以及所需的其他插件。 husky前置知识：git hooks 详解  基本用法husky 对 git hooks 进行了封装，使我们能">
   
-  <meta property="og:url" content="http://example.com/archives/2022/01/" />
+  <meta property="og:url" content="http://example.com/2021/12/24/eslint%20&amp;%20husky/" />
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="All Posts - Mett Li">
+  <meta name="twitter:title" content="eslint &amp; husky">
   
-  <meta name="twitter:description" content="">
-  
-  
-  
-  <meta name="twitter:image" content="http://example.com/images/thumbnail.jpg">
+  <meta name="twitter:description" content="很简单，执行如下命令： 1npx eslint --init  该命令会提供一个命令行选择界面，根据你的选择来生成 eslint 配置文件，并自动安装 eslint 以及所需的其他插件。 husky前置知识：git hooks 详解  基本用法husky 对 git hooks 进行了封装，使我们能">
   
   
-  <meta name="twitter:url" content="http://example.com/archives/2022/01/" />
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/12/24/eslint%20&amp;%20husky/" />
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -195,96 +191,39 @@
 </div>
 
         <div class="trans">
-          
-<h2>All Posts</h2>
+            <h2>eslint & husky</h2>
 
+  <p>很简单，执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx eslint --init</span><br></pre></td></tr></table></figure>
 
-    <article>
-      <div class="row">
+<p>该命令会提供一个命令行选择界面，根据你的选择来生成 eslint 配置文件，并自动安装 eslint 以及所需的其他插件。</p>
+<h2 id="husky"><a href="#husky" class="headerlink" title="husky"></a>husky</h2><p>前置知识：<a target="_blank" rel="noopener" href="https://www.notion.so/git-hooks-c5bc4e56dbfe4b03ac418396ff7b9613">git hooks 详解</a> </p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>husky 对 git hooks 进行了封装，使我们能够更方便的使用 git hooks。最基础的用途就是保证 git commit 提示信息的格式。这里使用的 husky 版本是 7+。husky 做过一个 break change，因此如果使用的是低于 7.x 的版本，初始化命令的执行会有问题。</p>
+<p>和 eslint 类似，husky 也提供了初始化的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx husky-init &amp;&amp; yarn</span><br></pre></td></tr></table></figure>
 
-        <div class="three columns left lit">
-          <p class="bottom">Jan 31, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/31/hello-world/" class="">
-            
-              Hello World
-            
-          </a>
-        </div>
-      </div>
-    </article>
+<p>注意这里多了一个安装命令，husky 和 eslint 不同的是，husky 不会自动安装，因此需要我们手动安装 husky。</p>
+<p>在运行完成后，会发现目录下多了一个 <code>.husky</code> 的文件夹，我们所有的 hooks 都会放在这个文件夹下。里面会默认生成两个 hooks 文件，一个是 pre-commit，一个是 commit-msg。</p>
+<p>添加 commit-msg hook 的命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx husky add .husky/commit-msg <span class="string">&#x27;npx --no -- commitlint --edit &quot;$1&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
 
-    <article>
-      <div class="row">
+<p>其中的 commit-msg 可以被替换成任意 git hook，后面的字符串就是对应 hook 要执行的命令。</p>
+<p>如果要移除某个 hook，husky 没有提供响应的命令，直接删除 .husky 文件夹下和 hook 同名的文件即可。</p>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>在项目中，我想做两件事：</p>
+<ol>
+<li>在 commit 的时候，使用 eslint 自动对提交的内容进行格式化。</li>
+<li>规范 commit 信息的格式。</li>
+</ol>
+<p>这两件事刚好可以通过 pre-commit 和 commit-msg 做到。</p>
+<p>先来说第一件事，前面已经配置了 eslint，因此只需要在 pre-commit 的时候，执行 <code>npm run lint</code> 即可。</p>
+<p>第二件事则稍微有点复杂，需要用到 <code>@commitlint/cli</code> 这个包。根据它的文档，执行如下命令即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Install commitlint cli and conventional config</span></span><br><span class="line">npm install --save-dev @commitlint/&#123;config-conventional,cli&#125;</span><br><span class="line"><span class="comment"># For Windows:</span></span><br><span class="line">npm install --save-dev @commitlint/config-conventional @commitlint/cli</span><br><span class="line"></span><br><span class="line"><span class="comment"># Configure commitlint to use conventional config</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;module.exports = &#123;extends: [&#x27;@commitlint/config-conventional&#x27;]&#125;&quot;</span> &gt; commitlint.config.js</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add hook</span></span><br><span class="line">npx husky add .husky/commit-msg <span class="string">&#x27;npx --no -- commitlint --edit &quot;$1&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
 
-        <div class="three columns left lit">
-          <p class="bottom">Jan 19, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/19/git%20hooks%20%E8%AF%A6%E8%A7%A3/" class="">
-            
-              git hooks 详解
-            
-          </a>
-        </div>
-      </div>
-    </article>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366786798">https://zhuanlan.zhihu.com/p/366786798</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/conventional-changelog/commitlint">https://github.com/conventional-changelog/commitlint</a></p>
 
-    <article>
-      <div class="row">
-
-        <div class="three columns left lit">
-          <p class="bottom">Jan 17, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/17/HTTP%20%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9Aweb%20%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="">
-            
-              HTTP 权威指南（五）：web 服务器
-            
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article>
-      <div class="row">
-
-        <div class="three columns left lit">
-          <p class="bottom">Jan 10, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/10/CSS%20%E7%B3%BB%E5%88%97%EF%BC%9Adisplay%20contents/" class="">
-            
-              CSS 系列：display contents
-            
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article>
-      <div class="row">
-
-        <div class="three columns left lit">
-          <p class="bottom">Jan 6, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/06/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AHTTP%E6%8A%A5%E6%96%87/" class="">
-            
-              HTTP权威指南（三）：HTTP报文
-            
-          </a>
-        </div>
-      </div>
-    </article>
-
-<div class="pagination-bar">
-  <ul class="pagination">
-    
-    
-  </ul>
-</div>
+  <p> — Dec 24, 2021</p>
+  
 
 
         </div>

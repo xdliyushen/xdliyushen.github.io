@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>sass 快速教程</title>
+  
+  <link rel="canonical" href="http://example.com/2021/04/07/sass%20%E5%BF%AB%E9%80%9F%E6%95%99%E7%A8%8B/">
+  
+  <meta name="description" content="本文旨在让帮助大家快速上手sass。 准备阶段什么是sass？学过css的都知道，css并不是一种编程语言，每个语句都是一条单独的命令。因此许多初学者常常不知所措。为了解决这一问题，让css更像是一门编程语言，css预编译处理器诞生了。sass便是其中的一种，经过编译之后可以形成浏览器可识别的css">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="sass 快速教程" />
+  
+  <meta property="og:description" content="本文旨在让帮助大家快速上手sass。 准备阶段什么是sass？学过css的都知道，css并不是一种编程语言，每个语句都是一条单独的命令。因此许多初学者常常不知所措。为了解决这一问题，让css更像是一门编程语言，css预编译处理器诞生了。sass便是其中的一种，经过编译之后可以形成浏览器可识别的css">
+  
+  <meta property="og:url" content="http://example.com/2021/04/07/sass%20%E5%BF%AB%E9%80%9F%E6%95%99%E7%A8%8B/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="sass 快速教程">
+  
+  <meta name="twitter:description" content="本文旨在让帮助大家快速上手sass。 准备阶段什么是sass？学过css的都知道，css并不是一种编程语言，每个语句都是一条单独的命令。因此许多初学者常常不知所措。为了解决这一问题，让css更像是一门编程语言，css预编译处理器诞生了。sass便是其中的一种，经过编译之后可以形成浏览器可识别的css">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/04/07/sass%20%E5%BF%AB%E9%80%9F%E6%95%99%E7%A8%8B/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>sass 快速教程</h2>
+
+  <p>本文旨在让帮助大家快速上手sass。</p>
+<h2 id="准备阶段"><a href="#准备阶段" class="headerlink" title="准备阶段"></a>准备阶段</h2><h3 id="什么是sass？"><a href="#什么是sass？" class="headerlink" title="什么是sass？"></a>什么是sass？</h3><p>学过css的都知道，css并不是一种编程语言，每个语句都是一条单独的命令。因此许多初学者常常不知所措。为了解决这一问题，让css更像是一门编程语言，css预编译处理器诞生了。<code>sass</code>便是其中的一种，经过编译之后可以形成浏览器可识别的css文件。与<code>sass</code>类似的还有<code>Less</code>、<code>Postcss</code>等。<br>在css3之后，原生css也开始支持变量等特性（前缀为<code>–</code>），大部分浏览器均已支持这一特性。原生css变量的好处在于可直接与js代码进行互动，方便进一步执行复杂操作。 </p>
+<h3 id="安装sass"><a href="#安装sass" class="headerlink" title="安装sass"></a>安装sass</h3><p>要想使用sass，必须先安装Ruby。</p>
+<p>可直接从官网下载Ruby。Ruby安装结束后可直接通过以下命令安装sass。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install sass</span><br></pre></td></tr></table></figure>
+
+<p>使用说明sass文件的后缀为<code>.scss</code>，意思是<code>sassy CSS（时髦的CSS）</code> 。</p>
+<p>sass文件的编译方法主要有以下三种，分别对应不同的需求。</p>
+<ul>
+<li>单文件编译此命令用于将单独sass文件编译为指定路径的css文件。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sass sass文件路径:css文件路径</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>多文件编译使用该命令可以将目标文件夹内的所有sass文件编译并保存为指定文件夹下的css文件。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sass sass文件夹:css文件夹</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>动态编译使用此命令，sass会监测代码修改，并自动编译。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sass - -watch sass文件路径:css文件路径sass - -watch sass文件夹:css文件夹</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>使用以下命令可在编译时指定sass文件的编译风格。</p>
+<p>  指定编译风格编译sass编译时提供四种编译风格，分别为</p>
+<ul>
+<li>nested：嵌套缩进的css代码（默认）。</li>
+<li>expanded：没有缩进的、扩展的css代码。</li>
+<li>compact：简洁格式的css代码。</li>
+<li>compressed：压缩后的css代码（生产环境常用）。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sass –style 编译风格 sass文件路径 css文件路径</span><br></pre></td></tr></table></figure>
+
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>sass允许定义变量。所有变量均以<code>$</code>开头。若重复声明变量值，则变量值以变量使用处之前最后一次声明的值为准。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$black: #000;</span><br><span class="line"></span><br><span class="line">div&#123;</span><br><span class="line">    color: $black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若需将变量嵌套入字符串中，需将变量写在<code>#&#123;&#125;</code>内。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$side: right;</span><br><span class="line"></span><br><span class="line">div&#123;</span><br><span class="line">    border-#&#123;$side&#125;-radius: 20px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h3><p>sass允许在代码中进行计算。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">    margin: (14px/2);</span><br><span class="line">    top: 50px + 100px;</span><br><span class="line">    right: $var * 10%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意： 如计算后的结果需要保留单位，则应该在参与运算的数中添加单位，而不能通过字符串拼接的方式为结果添加单位。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">    top: 50 + 20 + &#x27;px&#x27;; /* 错误！ */</span><br><span class="line">    top: 50px + 20px; /* 正确！ */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h3><h3 id="选择器嵌套"><a href="#选择器嵌套" class="headerlink" title="选择器嵌套"></a>选择器嵌套</h3><p>sass实现了选择器嵌套，以解决重复书写前缀以及相同前缀css代码之间关系不够明确等问题。如以下css代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">div h1&#123;</span><br><span class="line">    color: #000;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在sass中可写为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">    h1&#123;</span><br><span class="line">        color: #000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种写法不仅避免了重复书写前缀，还让css类之间的关系变得更加清晰。</p>
+<h3 id="属性嵌套"><a href="#属性嵌套" class="headerlink" title="属性嵌套"></a>属性嵌套</h3><p>sass还允许属性嵌套。如针对<code>border-color</code>和<code>border-radius</code>属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">    border: &#123;</span><br><span class="line">        color: #000;</span><br><span class="line">        radius: 20px;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：border后必须加:。</p>
+</blockquote>
+<h3 id="父元素选择器-amp"><a href="#父元素选择器-amp" class="headerlink" title="父元素选择器&amp;"></a>父元素选择器&amp;</h3><p>为了使用伪类，必须在嵌套代码中使用父选择器<code>&amp;</code>来指代父元素。直接在嵌套块中无法使用伪类！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/* css代码 */</span><br><span class="line">div:hover&#123;</span><br><span class="line">    color: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/* sass代码 */div&#123;</span><br><span class="line">    &amp;:hover&#123;</span><br><span class="line">        color: red;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><p>sass支持<code>for循环</code>、<code>while循环</code>以及<code>each循环</code>（效果类似于<code>for..of循环</code>）。</p>
+<h3 id="for循环命令-for"><a href="#for循环命令-for" class="headerlink" title="for循环命令 @for"></a>for循环命令 @for</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/* sass代码 */</span><br><span class="line">@for $i from 1 to 3 &#123;</span><br><span class="line">    .border-#&#123;$i&#125; &#123;</span><br><span class="line">        border: #&#123;$i&#125;px solid blue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="while循环命令-while"><a href="#while循环命令-while" class="headerlink" title="while循环命令 @while"></a>while循环命令 @while</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/* sass代码 */</span><br><span class="line">$i: 3;</span><br><span class="line"></span><br><span class="line">@while $i &gt; 0 &#123;</span><br><span class="line">    .item-#&#123;$i&#125; &#123;</span><br><span class="line">        width: $i * 5px;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $i: $i - 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="each循环命令-each"><a href="#each循环命令-each" class="headerlink" title="each循环命令 @each"></a>each循环命令 @each</h3><p><code>each循环</code>是一个比较特殊的循环，可近似理解为<code>for..of循环</code>。示例代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/* sass代码 */</span><br><span class="line">@each $member in a, b, c&#123;</span><br><span class="line">    .#&#123;$member&#125; &#123;</span><br><span class="line">        background-image: url(&quot;/image/#&#123;$member&#125;.jpg&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意： each循环会遍历in之后的所有值，这些值不一定是变量，也可以是如示例代码中的类字符串。</p>
+</blockquote>
+<h3 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h3><p>sass支持<code>if..else</code>条件判断语句。写为<code>@if</code>和<code>@else</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@if lightness($color) &gt; 30% &#123;</span><br><span class="line">    background-color: #000;</span><br><span class="line">&#125; @else &#123;</span><br><span class="line">    background-color: #fff;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h3><p>sass支持用户自定义函数。一般用于完成一些重复且繁琐的单位转换等计算。函数用<code>@function</code>关键字声明，返回值用<code>@return</code>关键字声明。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@function double($n) &#123;</span><br><span class="line">    @return $n * 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#sidebar &#123;</span><br><span class="line">    width: double(5px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码复用"><a href="#代码复用" class="headerlink" title="代码复用"></a>代码复用</h3><p>继承sass允许一个类继承另一个类，使用<code>@extend</code>命令实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.class1&#123;</span><br><span class="line">    color: #red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.class2&#123;</span><br><span class="line">    @extend .class1;</span><br><span class="line">    font-size: 5px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="引入文件"><a href="#引入文件" class="headerlink" title="引入文件"></a>引入文件</h3><p>使用<code>@import</code>命令用于引入外部文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@import &quot;path/filename.scss&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>.scss后缀可省略。</p>
+<h3 id="mixin"><a href="#mixin" class="headerlink" title="mixin"></a>mixin</h3><p>mixin是一部分可复用的css代码块，将其当做函数的简化版本。通过<code>@mixin</code>声明，使用时通过<code>@include</code>引用。mixin还可指定参数和默认值，使用时可传入参数。示例如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@mixin left($value: 10px) &#123;</span><br><span class="line">    float: left;</span><br><span class="line">    margin-right: $value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div &#123;</span><br><span class="line">    @include left(20px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <p> — Apr 7, 2021</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>yaml</title>
+  
+  <link rel="canonical" href="http://example.com/2022/02/06/yaml/">
+  
+  <meta name="description" content="在尝试搭建博客的时候，我遇到了一个问题。我希望 markdown 文件不止有内容，最好还包含诸如标题、摘要、创建时间等额外的信息。因为之前用过 hexo，所以我记住了那种在文件开头写入这些信息的方法： 12345---title: 测试标题date: 2020-02-05 21:25:58tags:">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="yaml" />
+  
+  <meta property="og:description" content="在尝试搭建博客的时候，我遇到了一个问题。我希望 markdown 文件不止有内容，最好还包含诸如标题、摘要、创建时间等额外的信息。因为之前用过 hexo，所以我记住了那种在文件开头写入这些信息的方法： 12345---title: 测试标题date: 2020-02-05 21:25:58tags:">
+  
+  <meta property="og:url" content="http://example.com/2022/02/06/yaml/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="yaml">
+  
+  <meta name="twitter:description" content="在尝试搭建博客的时候，我遇到了一个问题。我希望 markdown 文件不止有内容，最好还包含诸如标题、摘要、创建时间等额外的信息。因为之前用过 hexo，所以我记住了那种在文件开头写入这些信息的方法： 12345---title: 测试标题date: 2020-02-05 21:25:58tags:">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2022/02/06/yaml/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>yaml</h2>
+
+  <p>在尝试搭建博客的时候，我遇到了一个问题。我希望 markdown 文件不止有内容，最好还包含诸如标题、摘要、创建时间等额外的信息。因为之前用过 hexo，所以我记住了那种在文件开头写入这些信息的方法：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">测试标题</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2020-02-05 21:25:58</span></span><br><span class="line"><span class="attr">tags:</span> [ <span class="string">js</span> ]</span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p>但当时的我没有意识到，这本质上是 yaml。现在既然我打算不使用 hexo 等脚手架，从零开始搭建博客，那么就需要弄明白这东西到底是什么，以及怎么用。</p>
+<h2 id="yaml-是什么？"><a href="#yaml-是什么？" class="headerlink" title="yaml 是什么？"></a>yaml 是什么？</h2><p><code>yaml</code> 的全称是 <code>YAML Ain&#39;t a Markup Language</code> 或者是 <code>Yet Another Markup Language</code> ，是一种可读性高、用来表示信息序列化的格式。可以将它理解为另一种 JSON，但它远比 JSON 要方便的多。<code>yaml</code> 常用于书写配置文件或元数据。</p>
+<h2 id="yaml-的语法"><a href="#yaml-的语法" class="headerlink" title="yaml 的语法"></a>yaml 的语法</h2><p>yaml 一般以三个相邻的 <code>-</code> 为开头，接着是要表达的数据，这些数据都以 <code>key-value</code> 的形式存在。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">key:</span> <span class="string">value</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 value 可以是字符串、日期、数组和对象。</p>
+<p>具体的语法参见这里：<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2016/07/yaml.html">https://www.ruanyifeng.com/blog/2016/07/yaml.html</a></p>
+<h2 id="解析-yaml"><a href="#解析-yaml" class="headerlink" title="解析 yaml"></a>解析 yaml</h2><p>要解析 yaml，需要用到 <code>js-yaml</code> 的 npm 包。下面是一个例子：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> yaml = <span class="built_in">require</span>(<span class="string">&#x27;js-yaml&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123; title: &#x27;测试标题&#x27; &#125;</span></span><br><span class="line">yaml.<span class="title function_">load</span>(<span class="string">&#x27;---title: 测试标题&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>具体文档在这里：<a target="_blank" rel="noopener" href="https://github.com/nodeca/js-yaml">https://github.com/nodeca/js-yaml</a></p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="js-yaml-报错：expected-a-single-document-in-the-stream-but-found-more"><a href="#js-yaml-报错：expected-a-single-document-in-the-stream-but-found-more" class="headerlink" title="js-yaml 报错：expected a single document in the stream, but found more"></a>js-yaml 报错：expected a single document in the stream, but found more</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> yaml = <span class="built_in">require</span>(<span class="string">&#x27;js-yaml&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// error: expected a single document in the stream, but found more</span></span><br><span class="line">yaml.<span class="title function_">load</span>(</span><br><span class="line"><span class="string">`---</span></span><br><span class="line"><span class="string">title: 测试标题</span></span><br><span class="line"><span class="string">---`</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>看下 js-yaml 源码中的例子就可以知道了。<strong>在 js-yaml 看来，<code>---</code> 是起始符，并且只是起始符而不是结束符。</strong>因此这段代码在 js-yaml 看来就是有两段 yaml 需要处理，而 <code>load</code> 方法一次只能处理一段 yaml。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// both work fine</span></span><br><span class="line">yaml.<span class="title function_">load</span>(<span class="string">&#x27;---title: 测试标题&#x27;</span>);</span><br><span class="line">yaml.<span class="title function_">load</span>(<span class="string">&#x27;title: 测试标题&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2016/07/yaml.html">https://www.ruanyifeng.com/blog/2016/07/yaml.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/YAML">https://zh.wikipedia.org/wiki/YAML</a></li>
+<li><a target="_blank" rel="noopener" href="https://yaml.org/spec/1.2.2/">https://yaml.org/spec/1.2.2/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nodeca/js-yaml">https://github.com/nodeca/js-yaml</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ilterra/markdown-yaml-metadata-parser">https://github.com/ilterra/markdown-yaml-metadata-parser</a></li>
+</ul>
+
+  <p> — Feb 6, 2022</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

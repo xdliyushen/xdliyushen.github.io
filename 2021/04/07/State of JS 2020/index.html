@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>State of JS 2020</title>
+  
+  <link rel="canonical" href="http://example.com/2021/04/07/State%20of%20JS%202020/">
+  
+  <meta name="description" content="前言针对 State of js 2020 报告的个人版总结。 脚手架框架方面，出现了 Svelte 构建工具方面，出现了 snowpack 以及撰写该文稿时出现的 vite。 后续会体验下这三个工具，看看具体能带来多大的提升。 特性语法主要有以下几种：  Optional Chaining（?.）">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="State of JS 2020" />
+  
+  <meta property="og:description" content="前言针对 State of js 2020 报告的个人版总结。 脚手架框架方面，出现了 Svelte 构建工具方面，出现了 snowpack 以及撰写该文稿时出现的 vite。 后续会体验下这三个工具，看看具体能带来多大的提升。 特性语法主要有以下几种：  Optional Chaining（?.）">
+  
+  <meta property="og:url" content="http://example.com/2021/04/07/State%20of%20JS%202020/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="State of JS 2020">
+  
+  <meta name="twitter:description" content="前言针对 State of js 2020 报告的个人版总结。 脚手架框架方面，出现了 Svelte 构建工具方面，出现了 snowpack 以及撰写该文稿时出现的 vite。 后续会体验下这三个工具，看看具体能带来多大的提升。 特性语法主要有以下几种：  Optional Chaining（?.）">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/04/07/State%20of%20JS%202020/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>State of JS 2020</h2>
+
+  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对 State of js 2020 报告的个人版总结。</p>
+<h1 id="脚手架"><a href="#脚手架" class="headerlink" title="脚手架"></a>脚手架</h1><p>框架方面，出现了 <code>Svelte</code> 构建工具方面，出现了 <code>snowpack</code> 以及撰写该文稿时出现的 <code>vite</code>。</p>
+<p>后续会体验下这三个工具，看看具体能带来多大的提升。</p>
+<h1 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h1><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>主要有以下几种：</p>
+<ul>
+<li><code>Optional Chaining（?.）</code></li>
+<li><code>Nullish Coalescing（??）</code></li>
+<li><code>Private Fields</code>：在类语法中，使用 <code>#</code> 前缀来定义私有方法和属性。</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ClassWithPrivateMethod</span> &#123;</span><br><span class="line">		#<span class="title function_">privateMethod</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;hello world&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Destructuring assignment（解构取值）</code></li>
+<li><code>Spread Operator（...）</code></li>
+<li><code>Arrow Functions</code></li>
+</ul>
+<p>除了定义私有方法和属性外，其他的都是比较普及的语法了。</p>
+<h2 id="语言"><a href="#语言" class="headerlink" title="语言"></a>语言</h2><h3 id="Decorator"><a href="#Decorator" class="headerlink" title="Decorator"></a>Decorator</h3><p><code>修饰器（Decorator）</code>是一个函数，用来修改类的行为。简而言之，就是在类被实例化时修改其方法或属性。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Decorator 改变整个类</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">testable</span>(<span class="params">target</span>) &#123;</span><br><span class="line">    target.<span class="property">isTestable</span> = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@testable</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyTestableClass</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">MyTestableClass</span>.<span class="property">isTestable</span>) <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">testable</span>(<span class="params">isTestable</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">target</span>) &#123;</span><br><span class="line">        target.<span class="property">isTestable</span> = isTestable;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="title function_">testable</span>(<span class="literal">true</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyTestableClass</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MyTestableClass</span>.<span class="property">isTestable</span> <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">@<span class="title function_">testable</span>(<span class="literal">false</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">MyClass</span>.<span class="property">isTestable</span> <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Decorator 改变类的方法</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    @readonly</span><br><span class="line">    <span class="title function_">name</span>(<span class="params"></span>) &#123; <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.first&#125;</span> <span class="subst">$&#123;<span class="variable language_">this</span>.last&#125;</span>`</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">readonly</span>(<span class="params">target, name, descriptor</span>)&#123;</span><br><span class="line">    <span class="comment">// 改变方法的描述对象</span></span><br><span class="line">    descriptor.<span class="property">writable</span> = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> descriptor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Dynamic-Import"><a href="#Dynamic-Import" class="headerlink" title="Dynamic Import"></a>Dynamic Import</h3><p>动态引入。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">import</span>(<span class="string">&#x27;/modules/my-module.js&#x27;</span>)</span><br><span class="line">.<span class="title function_">then</span>(<span class="function">(<span class="params"><span class="variable language_">module</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Do something with the module.</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable language_">module</span> = <span class="keyword">await</span> <span class="title function_">import</span>(<span class="string">&#x27;/modules/my-module.js&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><p>通俗的来说，Proxy 会在对象之前架起一道代理，所有对于对象属性和方法的访问都会先执行代理中的方法。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> hero = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;赵云&quot;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">25</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> handler = &#123;</span><br><span class="line">    <span class="attr">get</span>: <span class="function">(<span class="params">hero, name, </span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> heroName =<span class="string">`英雄名是<span class="subst">$&#123;hero.name&#125;</span>`</span>;</span><br><span class="line">        <span class="keyword">return</span> heroName;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">set</span>:<span class="function">(<span class="params">hero,name,value</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;hero.name&#125;</span> change to <span class="subst">$&#123;value&#125;</span>`</span>);</span><br><span class="line">        hero[name] = value;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> heroProxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(hero, handler);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(heroProxy.<span class="property">name</span>);</span><br><span class="line"><span class="comment">// --&gt; 英雄名是赵云</span></span><br><span class="line">heroProxy.<span class="property">name</span> = <span class="string">&#x27;黄忠&#x27;</span>;</span><br><span class="line"><span class="comment">// --&gt; 赵云 change to 黄忠</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(heroProxy.<span class="property">name</span>);</span><br><span class="line"><span class="comment">// --&gt; 英雄名是黄忠</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="async-x2F-await"><a href="#async-x2F-await" class="headerlink" title="async&#x2F;await"></a>async&#x2F;await</h3><p>老朋友了，不做介绍。</p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>不会吧不会吧，不会还有人没用过 Promise 吧。</p>
+<h3 id="Promise-allSettled"><a href="#Promise-allSettled" class="headerlink" title="Promise.allSettled()"></a>Promise.allSettled()</h3><blockquote>
+<p>The Promise.allSettled() method returns a promise that resolves after all of the given promises have either fulfilled or rejected, with an array of objects that each describes the outcome of each promise.<br>—— MDN: Promise.allSettled()</p>
+</blockquote>
+<h2 id="浏览器-API"><a href="#浏览器-API" class="headerlink" title="浏览器 API"></a>浏览器 API</h2><h3 id="Custom-Elements（自定义元素）"><a href="#Custom-Elements（自定义元素）" class="headerlink" title="Custom Elements（自定义元素）"></a>Custom Elements（自定义元素）</h3><p>就支持性来说，还没有达到能在生产环境应用的标准。——2021.03</p>
+<blockquote>
+<p>Firefox、Chrome 和 Opera 默认就支持。Safari 目前只支持 Autonomous Custom Elements（自主自定义标签），而 Edge 也正在积极实现中。</p>
+</blockquote>
+<p>通过这个 API，开发者可以将 HTML 页面的功能封装为一个自定义元素，以便于复用。<strong>自定义元素是 Web Component 的重要组成部分。</strong></p>
+<p>使用时，通过 <code>CustomElementRegistry.define()</code> 来注册自定义元素。在自定义元素的构造方法中可以进行一系列 DOM 操作。同时自定义元素还提供了一些生命周期函数，如<code>connectedCallback（自定义元素被插入 DOM 时调用）</code>、<code>disconnectedCallback（自定义元素从 DOM 中删除时调用）</code>等，便于进行额外操作。</p>
+<p>总体上给人的感觉类似于 React 组件，只不过是浏览器原生支持的。</p>
+<h3 id="Shadow-DOM"><a href="#Shadow-DOM" class="headerlink" title="Shadow DOM"></a>Shadow DOM</h3><p>支持性较佳，在主流浏览器以及新 Edge 中均支持，旧 Edge 不支持。</p>
+<p><strong>Shadow DOM 也属于 Web Component 的组成部分</strong>。通过 Shadow DOM 可以封装一系列 DOM 节点，同时将这些隐藏的、独立的 DOM 节点附加到某个元素上。</p>
+<blockquote>
+<p>From what I’ve read and the way I use it, is ShadowDom has to do with encapsulation like if you put a <style> tag inside the ShadowDom the css will only be applied to the ShadowDom and document fragments has to do with browser reflow.<br>———— 《ShadowDOM vs Document Fragments — How do they differ?》</p>
+</blockquote>
+<h3 id="Web-Speech"><a href="#Web-Speech" class="headerlink" title="Web Speech"></a>Web Speech</h3><p>支持性尚不佳。——2021.03</p>
+<p>用于处理语音数据的 API，分为两部分： </p>
+<ul>
+<li><code>SpeechSynthesis</code>：语音合成，提供了文本到语音（TTS）的能力。</li>
+<li><code>SpeechRecognition</code>：语音识别，提供了从音频输入设备中获取语音数据的能力。</li>
+</ul>
+<h3 id="Web-Audio"><a href="#Web-Audio" class="headerlink" title="Web Audio"></a>Web Audio</h3><p>支持性尚不佳。——2021.03</p>
+<p>Web Audio API 是一组用于在浏览器中操作音频数据的 API，通过这些 API，开发者可以做到选择音频源、为音频增加混响等特效、音频可视化等功能。</p>
+<p>一个使用 Web Audio API 的基本流程是： </p>
+<ol>
+<li>创建一个 Web Audio 上下文。 </li>
+<li>在 Web Audio 上下文中创建源，如 <code>&lt;audio&gt;</code> 等。</li>
+<li>创造效果节点，如混响、压缩、平移等，用于为音频数据添加特效。</li>
+<li>选择输出目的地，如你的系统扬声器。</li>
+<li>将源连接到输出目的地，输出效果节点处理后的音频数据。</li>
+</ol>
+<h3 id="Web-Animations"><a href="#Web-Animations" class="headerlink" title="Web Animations"></a>Web Animations</h3><p>支持性尚不佳，但提供了 <a target="_blank" rel="noopener" href="https://github.com/web-animations/web-animations-js">ployfill</a>。 ——2021.03</p>
+<p>简单来说，Web Animation 是 CSS Animation 和 CSS Translation 的 JS 版本。除此之外，还提供了一些用于控制动画播放的 API，如 <code>play()</code>、<code>pause()</code>、<code>reverse()</code> 等。</p>
+<h3 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h3><p>老朋友了，不做赘述。</p>
+<h3 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h3><p>用于创建 WebSocket 连接，通过该连接可以发送和接收数据，允许服务器推送数据到客户端。</p>
+<h3 id="Service-Worker"><a href="#Service-Worker" class="headerlink" title="Service Worker"></a>Service Worker</h3><p><strong>Service workers 本质上充当 Web 应用程序、浏览器与网络（可用时）之间的代理服务器</strong>。这个 API 旨在创造更好的离线体验，它会拦截网络请求并根据网络是否可用采取来适当的动作、更新来自服务器的的资源。它还提供入口以推送通知和访问后台同步 API。</p>
+<h3 id="Local-Storage"><a href="#Local-Storage" class="headerlink" title="Local Storage"></a>Local Storage</h3><p>老朋友了，不做赘述。</p>
+<h3 id="WebVR"><a href="#WebVR" class="headerlink" title="WebVR"></a>WebVR</h3><p>通过 WebVR，开发者可以将位置和动作信息转换成 3D 场景中的运动。</p>
+<p>就目前而言，无论是 VR 还是 WebVR API 都尚不成熟，预计还要很久才能投入生产环境中。</p>
+<h3 id="WebRTC"><a href="#WebRTC" class="headerlink" title="WebRTC"></a>WebRTC</h3><p><code>WebRTC（Web Real-time Communication）</code>是一项实时通讯技术，它允许站点在不借助中间媒介的情况下，建立浏览器之间的<code>点对点（peer to peer）</code>连接，实现视频流和音频流或其他任意数据的传输。这使得实时网络通讯和点对点分享称为可能。</p>
+<p>WebRTC 不仅仅只是一组 API，还包括一系列网络协议和连接标准。其使用的协议包括：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment">ICE</a>、<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/STUN">STUN</a>、<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Network_address_translation">NAT</a>、<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/TURN">TURN</a> 以及 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Session_Description_Protocol">SDP</a> 等。</p>
+<h3 id="Intl"><a href="#Intl" class="headerlink" title="Intl"></a>Intl</h3><p><code>Intl</code> 全称是 <code>Internationalization（国际化支持）</code>，代表了一组方法，提供了一系列字符串、数字、日期、列表等的格式化方法。具体包括：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator">Intl.Conllator()</a>：<code>Collators（校对员）</code>的构造函数，用于创建对语言敏感的字符串比较对象。</li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat">Intl.DateTimeFormat()</a>：<code>DateTimeFormat</code> 的构造函数，用于创建对语言敏感的 Date 对象格式化函数。</li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DisplayNames/DisplayNames">Intl.DisplayNames()</a>：用于创建可以自由切换语言的、用于显示国家名称的对象。</li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/ListFormat">Intl.ListFormat()</a>：<code>ListFormat</code> 的构造函数，用于创建对语言敏感的列表格式化函数。</li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/Locale">Intl.Locale()</a>：<code>locale</code> 意为 <code>区域设置</code>，也称为 <code>本地化策略集</code>、<code>本地环境</code>，是表达程序用户地区方面的软件设定。该方法用于构造代表指定地域的 Unicode 编码的设置。</li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat">Intl.NumberFormat()</a>：<code>NumberFormat</code> 的构造函数，用于创建对语言敏感的数字格式化函数。</li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules/PluralRules">Intl.PluralRules()</a>：<code>Plural（复数）Rules</code> 的构造函数，用于创建对语言敏感的复数格式化函数。</li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat/RelativeTimeFormat">Intl.RelativeTimeFormat()</a>：<code>RelativeTimeFormat</code> 的构造函数，用于创建语言敏感的相对时间格式化函数。</li>
+</ul>
+<p>可以看到，Intl 的大多数方法都是对语言敏感的，因此常用于国际化网站的开发和处理。</p>
+<h3 id="WebGL"><a href="#WebGL" class="headerlink" title="WebGL"></a>WebGL</h3><p><code>WebGL (Web Graphics Library)</code>是一组用于渲染交互式 2D 和 3D 图形的 API，可以在 <canvas> 中使用。</p>
+<p>工作中之后用到的应该会比较多，值得注意。</p>
+<h1 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h1><p>这里会列举一些排名比较靠前的技术，日后可以多多了解一下。</p>
+<ul>
+<li>开发语言<ul>
+<li>TypeScript</li>
+</ul>
+</li>
+<li>前端框架<ul>
+<li>Svelte</li>
+<li>React</li>
+<li>Vue.js</li>
+</ul>
+</li>
+<li>数据层<ul>
+<li>GraphQL</li>
+<li>Apollo Client</li>
+<li>Vuex</li>
+</ul>
+</li>
+<li>后端框架<ul>
+<li>Next.js</li>
+<li>Express</li>
+</ul>
+</li>
+<li>测试<ul>
+<li>Testing Library</li>
+<li>Jest</li>
+</ul>
+</li>
+<li>构建工具<ul>
+<li>esbuild</li>
+<li>Snowpack</li>
+<li>Typescript</li>
+<li>webpack</li>
+</ul>
+</li>
+<li>移动端和客户端<ul>
+<li>Electron</li>
+</ul>
+</li>
+</ul>
+<h1 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h1><p>常用工具库。</p>
+<ul>
+<li>Axios</li>
+<li>Lodash：增加多种数据类型，补充了一些对于数组、对象等的处理方法。</li>
+<li>Moment</li>
+<li>date-fns</li>
+<li>Material UI</li>
+<li>D3：绘图库。</li>
+</ul>
+<h1 id="发展方向"><a href="#发展方向" class="headerlink" title="发展方向"></a>发展方向</h1><p>目前大家认为 JavaScript 最缺少了的东西的 <code>Static Typing（静态类型）</code>。</p>
+<p>简单来说，静态类型就是像 C 语言一样，在变量使用之前需要先定义其类型。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>每年都看一看吧，把握业界最新的状态。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://2020.stateofjs.com/zh-Hans/">State of js 2020</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">MDN: import</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled">MDN: Promise.allSettled()</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Web_Components/Using_custom_elements">MDN: Custom Elements</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/60126477">知乎: 深入实践 ES6 Proxy &amp; Reflect</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Web_Components/Using_shadow_DOM">MDN: Shadow DOM</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/27512512/shadowdom-vs-document-fragments-how-do-they-differ">Stack Overflow: ShadowDOM vs Document Fragments — How do they differ? [closed]</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Speech_API">MDN: Web Speech API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API">MDN: Web Audio API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Animations_API">MDN: Web Animations API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Animations_API/Using_the_Web_Animations_API">MDN: Use Web Animations API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebSocket">MDN: WebScoket</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API">MDN: Service Worker API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebVR_API">MDN: Web VR API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebRTC_API">MDN: WebRTC API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols">MDN: Introduction to WebRTC protocols</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl">MDN: Intl</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl">MDN: Intl(en)</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API">MDN: WebGL API</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API">MDN: WebGL API(en)</a></li>
+</ul>
+
+  <p><a class="classtest-link" href="/tags/news/" rel="tag">news</a> — Apr 7, 2021</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

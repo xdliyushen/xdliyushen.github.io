@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>SheetJS常用API</title>
+  
+  <link rel="canonical" href="http://example.com/2021/04/07/SheetJS%E5%B8%B8%E7%94%A8API/">
+  
+  <meta name="description" content="SheetJS是前端操作Excel以及类似的二维表的最佳选择之一, 而js-xlsx是它的社区版本。 js-xlsx将注意力集中到了数据转换和导出上, 所以它支持相当多种类的数据解析和导出, 不仅仅局限于支持xlsx格式。 它可以：  解析符合格式的数据 导出符合格式的数据 利用中间层操作数据  可">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="SheetJS常用API" />
+  
+  <meta property="og:description" content="SheetJS是前端操作Excel以及类似的二维表的最佳选择之一, 而js-xlsx是它的社区版本。 js-xlsx将注意力集中到了数据转换和导出上, 所以它支持相当多种类的数据解析和导出, 不仅仅局限于支持xlsx格式。 它可以：  解析符合格式的数据 导出符合格式的数据 利用中间层操作数据  可">
+  
+  <meta property="og:url" content="http://example.com/2021/04/07/SheetJS%E5%B8%B8%E7%94%A8API/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SheetJS常用API">
+  
+  <meta name="twitter:description" content="SheetJS是前端操作Excel以及类似的二维表的最佳选择之一, 而js-xlsx是它的社区版本。 js-xlsx将注意力集中到了数据转换和导出上, 所以它支持相当多种类的数据解析和导出, 不仅仅局限于支持xlsx格式。 它可以：  解析符合格式的数据 导出符合格式的数据 利用中间层操作数据  可">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/04/07/SheetJS%E5%B8%B8%E7%94%A8API/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>SheetJS常用API</h2>
+
+  <p><code>SheetJS</code>是前端操作<code>Excel</code>以及类似的二维表的最佳选择之一, 而<code>js-xlsx</code>是它的社区版本。 <code>js-xlsx</code>将注意力集中到了数据转换和导出上, 所以它支持相当多种类的数据解析和导出, 不仅仅局限于支持<code>xlsx</code>格式。 它可以：</p>
+<ul>
+<li>解析符合格式的数据</li>
+<li>导出符合格式的数据</li>
+<li>利用中间层操作数据</li>
+</ul>
+<p>可以运行在浏览器端和<code>Node</code>端。 </p>
+<h2 id="浏览器端特色"><a href="#浏览器端特色" class="headerlink" title="浏览器端特色"></a>浏览器端特色</h2><ul>
+<li>纯浏览器端解析数据</li>
+<li>纯浏览器端导出数据</li>
+</ul>
+<h2 id="Node端特色"><a href="#Node端特色" class="headerlink" title="Node端特色"></a>Node端特色</h2><ul>
+<li>读写文件</li>
+<li>流式读写 值得注意的是, 虽然<code>SheetJS</code>可以实现流式读写, 但本身并没有直接实现流式读写的<code>API</code>。</li>
+</ul>
+<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><h2 id="浏览器端"><a href="#浏览器端" class="headerlink" title="浏览器端"></a>浏览器端</h2><p>浏览器端可以使用<code>script</code>标签进行引入。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;dist/xlsx.full.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Node端"><a href="#Node端" class="headerlink" title="Node端"></a>Node端</h2><p><code>Node</code>端可以使用<code>npm</code>进行引入。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xlsx --save</span><br></pre></td></tr></table></figure>
+
+<p>在文件中, 可以通过<code>import</code>或<code>require</code>引入。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> xlsx = <span class="built_in">require</span>(<span class="string">&#x27;xlsx&#x27;</span>);<span class="keyword">import</span> <span class="title class_">XlSX</span> <span class="keyword">from</span> <span class="string">&#x27;xlsx&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h1><h2 id="workbook-amp-worksheet"><a href="#workbook-amp-worksheet" class="headerlink" title="workbook &amp; worksheet"></a>workbook &amp; worksheet</h2><p>首先要明确的两个概念是<code>workbook</code>和<code>worksheet</code>, 这两个对象分别对应了整个文件和一个文件中的一个表格。</p>
+<h3 id="workbook"><a href="#workbook" class="headerlink" title="workbook"></a>workbook</h3><p><code>workbook</code>有两种方式来获取： </p>
+<ul>
+<li>读取已有的文件, 返回一个<code>workbook</code>对象。</li>
+<li>通过<code>XLSX.utils.book_new()</code>创建空白的<code>workbook</code>对象。</li>
+</ul>
+<p>常用到的<code>workbook</code>的属性有两个：</p>
+<ul>
+<li><code>Sheets</code>：文件中的表格列表。</li>
+<li><code>SheetNames</code>：文件中的表格名列表, 表现为数组。</li>
+</ul>
+<p>需要获取<code>workbook</code>中的某个表格时, 可以这样获取：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sheetname = workbook.<span class="property">SheetNames</span>[<span class="number">0</span>];<span class="keyword">let</span> worksheet = workbook.<span class="property">Sheets</span>[sheetname];</span><br></pre></td></tr></table></figure>
+
+<h3 id="worksheet"><a href="#worksheet" class="headerlink" title="worksheet"></a>worksheet</h3><p><code>worksheet</code>对象代表文件中的一个表格, 可以通过下标的形式访问表格中任意一小格的值：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 访问表格中A列第1行的值</span></span><br><span class="line">worksheet[<span class="string">&#x27;A1&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>其返回值为一个对象, 一般具有两个属性：</p>
+<ul>
+<li><code>v</code>：当前小格的值。</li>
+<li><code>t</code>：当前小格值的类型。</li>
+</ul>
+<h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h2><p><code>SheetJS</code>通过两种方式读取文件内容： </p>
+<ul>
+<li><code>XLSX.read(data, read_options)</code>：读取<code>data</code>并解析。</li>
+<li><code>XLSX.readFile(filename, read_options)</code>：读取<code>filename</code>文件并解析。</li>
+</ul>
+<p>有关<code>read_options</code>的内容详见<a target="_blank" rel="noopener" href="https://github.com/SheetJS/sheetjs#parsing-options">read_options</a>。</p>
+<h2 id="写入数据"><a href="#写入数据" class="headerlink" title="写入数据"></a>写入数据</h2><p><code>SheetJS</code>通过三种方法写入数据, 这两种方法均会对数字、字符串、<code>null</code>和<code>undefined</code>、日期等类型进行自动解析：</p>
+<ul>
+<li><code>XLSX.write(workbook, write_options)</code>：按照<code>workbook</code>中的数据转化为文件所需要的格式, 但不生成文件。</li>
+<li><code>XLSX.writeFile(workbook, filename[, write_options])</code>：按照<code>workbook</code>对象生成文件。若在浏览器端, 会自动下载该文件。在Node端, 会自动生成该文件并保存到本地。</li>
+<li><code>XLSX.writeFileAsync(filename, workbook, o, cb)</code>: 按照<code>workbook</code>对象生成文件。当<code>o</code>执行完毕后, 调用<code>cb</code>回调函数。</li>
+</ul>
+<p>有关<code>write_options</code>的内容详见<code>[write_options](https://github.com/SheetJS/sheetjs#writing-options)</code>。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// XLSX.writeFile</span></span><br><span class="line"><span class="comment">// 第一个参数为一个workbook对象, 第二个参数为所要生成文件的文件名</span></span><br><span class="line"><span class="variable constant_">XLSX</span>.<span class="title function_">writeFile</span>(workbook, <span class="string">&#x27;out.xlsb&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// XLSX.write</span></span><br><span class="line"><span class="comment">// 第一个参数为一个workbook对象, 第二个参数是对生成文件格式的一些设置</span></span><br><span class="line"><span class="comment">// 在本例中, 生成格式为xlsx的文件, 编码为base64</span></span><br><span class="line"><span class="variable constant_">XLSX</span>.<span class="title function_">write</span>(workbook, &#123;<span class="attr">bookType</span>:<span class="string">&#x27;xlsx&#x27;</span>, <span class="attr">bookSST</span>:<span class="literal">false</span>, <span class="attr">type</span>:<span class="string">&#x27;base64&#x27;</span>&#125;)</span><br><span class="line"><span class="comment">// 由于其不生成文件, 而只是返回组成文件的数据, 所以很适合一些需要通过异步请求来修改服务器上的文件等场景</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="转换数据格式"><a href="#转换数据格式" class="headerlink" title="转换数据格式"></a>转换数据格式</h2><p><code>SheetJS</code>支持读取文件并把数据导出成任意格式, 可通过以下几个<code>API</code>完成, 传入的参数均是一个<code>worksheet</code>对象： </p>
+<ul>
+<li><code>XLSX.utils.sheet_to_csv(worksheet)</code>：将表格数据转化为<code>csv</code>格式。</li>
+<li><code>XLSX.utils.sheet_to_txt(worksheet)</code>：将表格数据转化为生成由<code>utf16</code>编码的<code>txt</code>格式。</li>
+<li><code>XLSX.utils.sheet_to_html(worksheet)</code>：将表格转化为<code>html</code>文件。</li>
+<li><code>XLSX.utils.sheet_to_json(worksheet)</code>: 将表格数据转化为<code>json</code>格式。</li>
+</ul>
+<h2 id="表格操作"><a href="#表格操作" class="headerlink" title="表格操作"></a>表格操作</h2><ul>
+<li><code>XLSX.utils.aoa_to_sheet(Array[][])</code>：将二维数组转化为<code>worksheet</code>对象。</li>
+<li><code>XLSX.utils.json_to_sheet(Object)</code>：将<code>js</code>对象转化为<code>worksheet</code>对象。</li>
+<li><code>XLSX.utils.table_to_sheet(HTML)</code>：将<code>DOM</code>节点转化为<code>worksheet</code>对象（一般为<code>table</code>元素、<code>tr</code>元素和<code>th</code>元素）。</li>
+<li><code>XLSX.utils.sheet_add_aoa(worksheet, Array[][])</code>：将二维数组中的数据添加到已有的<code>worksheet</code>中。</li>
+<li><code>XLSX.utils.sheet_add_json(worksheet, Object)</code>：将<code>js</code>对象中的数据添加到已有的<code>worksheet</code>中。</li>
+<li><code>XLSX.utils.book_append_sheet(workbook, worksheet, sheetname)</code>：将<code>worksheet</code>对象添加到<code>workbook</code>中, 并命名为<code>sheetname</code>。</li>
+</ul>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><code>[SheetJS</code>项目<code>github</code>地址](<a target="_blank" rel="noopener" href="https://github.com/SheetJS/sheetjs">https://github.com/SheetJS/sheetjs</a>)</li>
+<li><code>[js-xlsx</code>模块学习指南](<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018077543">https://segmentfault.com/a/1190000018077543</a>)</li>
+</ul>
+
+  <p> — Apr 7, 2021</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

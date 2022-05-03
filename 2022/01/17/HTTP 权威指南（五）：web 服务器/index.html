@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>HTTP 权威指南（五）：web 服务器</title>
+  
+  <link rel="canonical" href="http://example.com/2022/01/17/HTTP%20%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9Aweb%20%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+  
+  <meta name="description" content="web 服务器是什么？web 服务器既可以指用于处理请求的硬件，也可以指提供服务的软件程序。apache、nginx 都属于服务器软件。 web 服务器的工作流程？ 和客户端建立连接 接收请求报文 处理请求，并根据请求作出相应动作 访问报文中指定的资源，可以是文件，也可以是数据库等 构建响应 发送响">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="HTTP 权威指南（五）：web 服务器" />
+  
+  <meta property="og:description" content="web 服务器是什么？web 服务器既可以指用于处理请求的硬件，也可以指提供服务的软件程序。apache、nginx 都属于服务器软件。 web 服务器的工作流程？ 和客户端建立连接 接收请求报文 处理请求，并根据请求作出相应动作 访问报文中指定的资源，可以是文件，也可以是数据库等 构建响应 发送响">
+  
+  <meta property="og:url" content="http://example.com/2022/01/17/HTTP%20%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9Aweb%20%E6%9C%8D%E5%8A%A1%E5%99%A8/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HTTP 权威指南（五）：web 服务器">
+  
+  <meta name="twitter:description" content="web 服务器是什么？web 服务器既可以指用于处理请求的硬件，也可以指提供服务的软件程序。apache、nginx 都属于服务器软件。 web 服务器的工作流程？ 和客户端建立连接 接收请求报文 处理请求，并根据请求作出相应动作 访问报文中指定的资源，可以是文件，也可以是数据库等 构建响应 发送响">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2022/01/17/HTTP%20%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9Aweb%20%E6%9C%8D%E5%8A%A1%E5%99%A8/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>HTTP 权威指南（五）：web 服务器</h2>
+
+  <h2 id="web-服务器是什么？"><a href="#web-服务器是什么？" class="headerlink" title="web 服务器是什么？"></a>web 服务器是什么？</h2><p>web 服务器既可以指用于处理请求的硬件，也可以指提供服务的软件程序。apache、nginx 都属于服务器软件。</p>
+<h2 id="web-服务器的工作流程？"><a href="#web-服务器的工作流程？" class="headerlink" title="web 服务器的工作流程？"></a>web 服务器的工作流程？</h2><ol>
+<li>和客户端建立连接</li>
+<li>接收请求报文</li>
+<li>处理请求，并根据请求作出相应动作</li>
+<li>访问报文中指定的资源，可以是文件，也可以是数据库等</li>
+<li>构建响应</li>
+<li>发送响应</li>
+<li>记录日志，便于之后进行分析和追踪</li>
+</ol>
+<h2 id="常见的服务器程序的结构有哪几种？"><a href="#常见的服务器程序的结构有哪几种？" class="headerlink" title="常见的服务器程序的结构有哪几种？"></a>常见的服务器程序的结构有哪几种？</h2><p><img src="/./images/HTTP%20%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9Aweb%20%E6%9C%8D%E5%8A%A1%E5%99%A8/Untitled.png"></p>
+<ul>
+<li><p>单线程 web 服务器</p>
+</li>
+<li><p>多进程及多线程 web 服务器</p>
+<p>  每个进程&#x2F;线程处理一个连接。</p>
+</li>
+<li><p>复用 I&#x2F;O 的 web 服务器</p>
+<p>  一个连接对应一个进程&#x2F;线程仍然太奢侈了，因为连接并不是所有时间都在传输数据的，因此诞生了复用 I&#x2F;O 结构的服务器。</p>
+<p>  在这种结构中，所有的连接被放入一个连接池中。只有当连接被激活（传输数据）时，才会从池子中被取出来，并交由请求处理进程&#x2F;线程做处理。在传输完成后，连接就又被放回去连接池，等待下次传输时再被取出。</p>
+</li>
+<li><p>复用 I&#x2F;O 的多线程 web 服务器</p>
+<p>  这种结构可以看做上个结构的升级版。在这种结构中，有多个请求处理进程&#x2F;线程同时存在，每个进程&#x2F;线程都监听总连接池的一个子集。</p>
+</li>
+</ul>
+<h2 id="关于重定向的详细说明？"><a href="#关于重定向的详细说明？" class="headerlink" title="关于重定向的详细说明？"></a>关于重定向的详细说明？</h2><p>web 服务器可以将浏览器重定向到其他地方来执行请求，重定向响应码为 3xx，首部中的 Location 字段包含了内容的新地址。</p>
+<p>常见的重定向场景有如下几种：</p>
+<ul>
+<li><p>永久搬离的资源：301 Moved Permanently</p>
+</li>
+<li><p>临时搬离的资源：303 See Other 或 307 Temporary Redirect</p>
+</li>
+<li><p>URL 增强：303 See Other 或 307 Temporary Redirect</p>
+<p>  服务器通常通过重定向的方式重写 URL，往往用于嵌入上下文。当请求到达时，服务器会生成一个包含了新的上下文信息的 URL，并将用户重定向到该 URL 中去。上述过程被称为 URL 增强。</p>
+</li>
+<li><p>负载均衡：303 See Other 或 307 Temporary Redirect</p>
+</li>
+<li><p>服务器关联：303 See Other 或 307 Temporary Redirect</p>
+<p>  服务器上常常保存有用户信息，服务器可以将浏览器重定向到包含用户信息的服务器上去。</p>
+</li>
+<li><p>规范目录格式：303 See Other 或 307 Temporary Redirect</p>
+<p>  用于补充 URL 中文件目录后面的斜杠，或者 index.html 等。</p>
+</li>
+</ul>
+<h2 id="什么是-SSI？SSI-有什么用？"><a href="#什么是-SSI？SSI-有什么用？" class="headerlink" title="什么是 SSI？SSI 有什么用？"></a>什么是 SSI？SSI 有什么用？</h2><p>以下内容摘抄自 apache 的文档：</p>
+<blockquote>
+<p><code>SSI （Server Side Includes）</code>是 HTML 页面中的指令，在页面被提供时由服务器进行运算，以对现有 HTML 页面增加动态生成的内容，而无须通过 CGI 程序提供其整个页面，或者使用其他动态技术。</p>
+</blockquote>
+<p>简单来说就是，SSI 是能够让页面在被请求的时候，让服务器对页面进行额外处理。apache 和 nginx 都支持配置 SSI，不过我很怀疑现在还有没有人真的在用这个东西就是了。</p>
+
+  <p><a class="classtest-link" href="/tags/HTTP/" rel="tag">HTTP</a> — Jan 17, 2022</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

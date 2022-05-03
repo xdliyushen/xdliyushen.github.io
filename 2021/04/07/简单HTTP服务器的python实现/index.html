@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>简单HTTP服务器的python实现</title>
+  
+  <link rel="canonical" href="http://example.com/2021/04/07/%E7%AE%80%E5%8D%95HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84python%E5%AE%9E%E7%8E%B0/">
+  
+  <meta name="description" content="简介本文的目标是实现一个能够处理HTTP请求, 返回相应HTML文件或404页面的HTTP服务器。 其中涉及到一些python中的Socket编程以及多线程编程的知识, 需要具备TCP协议、UDP协议、HTTP协议以及计算机网络分层模型的基础知识。 Socket基础Socket是什么?Socket又">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="简单HTTP服务器的python实现" />
+  
+  <meta property="og:description" content="简介本文的目标是实现一个能够处理HTTP请求, 返回相应HTML文件或404页面的HTTP服务器。 其中涉及到一些python中的Socket编程以及多线程编程的知识, 需要具备TCP协议、UDP协议、HTTP协议以及计算机网络分层模型的基础知识。 Socket基础Socket是什么?Socket又">
+  
+  <meta property="og:url" content="http://example.com/2021/04/07/%E7%AE%80%E5%8D%95HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84python%E5%AE%9E%E7%8E%B0/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="简单HTTP服务器的python实现">
+  
+  <meta name="twitter:description" content="简介本文的目标是实现一个能够处理HTTP请求, 返回相应HTML文件或404页面的HTTP服务器。 其中涉及到一些python中的Socket编程以及多线程编程的知识, 需要具备TCP协议、UDP协议、HTTP协议以及计算机网络分层模型的基础知识。 Socket基础Socket是什么?Socket又">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/04/07/%E7%AE%80%E5%8D%95HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84python%E5%AE%9E%E7%8E%B0/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>简单HTTP服务器的python实现</h2>
+
+  <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>本文的目标是实现一个能够处理HTTP请求, 返回相应HTML文件或404页面的HTTP服务器。 其中涉及到一些<code>python</code>中的<code>Socket编程</code>以及<code>多线程编程</code>的知识, 需要具备<code>TCP协议</code>、<code>UDP协议</code>、<code>HTTP协议</code>以及计算机网络分层模型的基础知识。</p>
+<h1 id="Socket基础"><a href="#Socket基础" class="headerlink" title="Socket基础"></a>Socket基础</h1><h2 id="Socket是什么"><a href="#Socket是什么" class="headerlink" title="Socket是什么?"></a>Socket是什么?</h2><p><code>Socket</code>又称<code>套接字</code>，应用程序通常通过<code>套接字</code>向网络发出请求或者应答网络请求，使主机间或者一台计算机上的进程间可以通讯。<code>Socket</code>一般是在操作系统底层实现的。像TCP的三次握手四次挥手等操作, 会在调用特定的方法后, 由操作系统内核自动完成, 无需额外编程。</p>
+<h2 id="python中的Socket"><a href="#python中的Socket" class="headerlink" title="python中的Socket"></a>python中的Socket</h2><h3 id="创建Socket对象"><a href="#创建Socket对象" class="headerlink" title="创建Socket对象"></a>创建Socket对象</h3><p>在<code>python</code>中, 一般通过<code>socket()</code>函数来创建套接字对象：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.socket([family[, <span class="built_in">type</span>[, protocol]]])</span><br></pre></td></tr></table></figure>
+
+<p>参数列表： </p>
+<ul>
+<li><em><strong>family</strong></em> : 套接字家族, 一般使用<code>AF_UNIX</code>和<code>AF_INET</code>。<code>AF_UNIX</code>用于同一台机器上的进程间通信, <code>AF_INET</code>用于IPV4类型的TCP和UDP通信。</li>
+<li><em><strong>type</strong></em> : 套接字类型, 有面向连接和非连接两种, 用<code>SOCK_STREAM</code>和<code>SOCK_DGRAM</code>表示, 分别对应<code>TCP</code>和<code>UDP</code> 。</li>
+<li><em><strong>protocol</strong></em> : 一般不填, 默认为0。</li>
+</ul>
+<h3 id="Socket对象的内建方法"><a href="#Socket对象的内建方法" class="headerlink" title="Socket对象的内建方法"></a>Socket对象的内建方法</h3><p>内建方法可大致分为三种：服务器端套接字方法、客户端套接字方法以及公共套接字方法。</p>
+<p><a target="_blank" rel="noopener" href="https://www.notion.so/7ecb617b7547448eb7a693dd6072fc1c">服务器端套接字方法</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.notion.so/39569bf4e13942d7a00de0a2f973a3c6">客户端套接字方法</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.notion.so/1d44302404e24e6ab887fb1883898680">公共套接字方法</a></p>
+<h1 id="Socket编程的简单实例"><a href="#Socket编程的简单实例" class="headerlink" title="Socket编程的简单实例"></a>Socket编程的简单实例</h1><p><code>Socket</code>编程主要分为两部分, 一部分为服务器端, 一部分为客户端。针对于 <code>TCP</code> 和 <code>UDP</code>, 两者服务器端和客户端的行为都是不同的。这里分别针对<code>TCP</code> 和 <code>UDP</code>写一个简单实现, 将客户端传到服务器的文本转化为大写后返回。下面分开来看：</p>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>对于 <code>UDP</code>这种无连接协议, 其客户端和服务器端的代码都相对简单。其基本流程如下：</p>
+<p><img src="/./images/%E7%AE%80%E5%8D%95HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84python%E5%AE%9E%E7%8E%B0/01.png"></p>
+<p>针对上述流程, 可以写出代码实现, 详见<a target="_blank" rel="noopener" href="https://github.com/xdyushenli/Computer-Network-A-Top-Down-Approch/tree/master/UDP">示例地址</a>。</p>
+<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p><code>TCP</code> 的客户端实现与和 <code>UDP</code>差不多, 但服务器端相差较大。在使用 <code>TCP</code> 传输的过程中, 服务器端要创建两个套接字, 一个是欢迎套接字, 用于监听客户端发送的连接请求; 另一个是根据连接请求创建的连接套接字, 用于向客户端发送和接收数据。</p>
+<p>客户端代码和服务器端代码流程如下：</p>
+<p><img src="/./images/%E7%AE%80%E5%8D%95HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84python%E5%AE%9E%E7%8E%B0/02.png"></p>
+<p>详细代码见<a target="_blank" rel="noopener" href="https://github.com/xdyushenli/Computer-Network-A-Top-Down-Approch/tree/master/TCP">示例地址</a>。</p>
+<h1 id="HTTP服务器"><a href="#HTTP服务器" class="headerlink" title="HTTP服务器"></a>HTTP服务器</h1><p>由上文我们可以看到, <strong>Socket编程针对的是TCP和UDP, 最大的作用是传输报文。</strong>上述示例中的服务器功能都比较简单, 只是把客户端传来的字符串变为大写后再传回去而已, 而这些操作都是在收到数据<code>recv()</code>之后、发送数据<code>send()</code>之前的数据处理部分完成的。</p>
+<p>一个<code>HTTP服务器</code>, 需要对客户端传来的<code>HTTP报文</code>进行解析, 并执行一系列操作(如文件存取等), 这些功能也都是在数据处理部分完成的。</p>
+<p>上面的示例都同时实现了客户端代码和服务器端代码。在这个场景中, 浏览器相当于客户端。当我们在浏览器中输入地址时, 浏览器会自动发送<code>HTTP请求</code>、建立<code>TCP连接</code>并接收回传数据, 因此我们只要实现<code>HTTP服务器端</code>就好。</p>
+<p>实现如下(<a target="_blank" rel="noopener" href="https://github.com/xdyushenli/Computer-Network-A-Top-Down-Approch/tree/master/HTTP">示例地址</a>)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造HTTP报文</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generateHTTPResponse</span>(<span class="params">response_start_line, response_header, response_body</span>):</span><br><span class="line">    <span class="keyword">return</span> (response_start_line + response_header + <span class="string">&#x27;\r\n&#x27;</span> + response_body).encode()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建TCP欢迎套接字</span></span><br><span class="line">serverSocket = socket(AF_INET, SOCK_STREAM)</span><br><span class="line"><span class="comment"># 将欢迎套接字绑定到指定端口</span></span><br><span class="line">serverSocket.bind((<span class="string">&#x27;&#x27;</span>, <span class="number">8000</span>))</span><br><span class="line"><span class="comment"># 开始监听来自客户端的连接请求, 设置最大连接数为1</span></span><br><span class="line">serverSocket.listen(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 持续监听来自客户端的连接请求</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment"># 收到客户端连接请求, 创建连接套接字</span></span><br><span class="line">    connectionSocket, address = serverSocket.accept()</span><br><span class="line">    <span class="comment"># 获取客户端发送的HTTP报文</span></span><br><span class="line">    http_message = (connectionSocket.recv(<span class="number">1024</span>)).decode()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 获取请求的文件路径</span></span><br><span class="line">        path = http_message.split(<span class="string">&#x27; &#x27;</span>)[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> (path == <span class="string">&#x27;/&#x27;</span> <span class="keyword">or</span> path == <span class="string">&#x27;/index.html&#x27;</span>):</span><br><span class="line">            <span class="comment"># 获取当前文件所在目录</span></span><br><span class="line">            root_dir = os.path.dirname(__file__)</span><br><span class="line">            <span class="comment"># 读取文件</span></span><br><span class="line">            f = <span class="built_in">open</span>(root_dir + <span class="string">&#x27;\\index.html&#x27;</span>)</span><br><span class="line">            output_data = f.read()</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># HTTP文件报文</span></span><br><span class="line">            response_start_line = <span class="string">&#x27;HTTP/1.1 200 OK\r\n&#x27;</span></span><br><span class="line">            response_header = <span class="string">&#x27;Server: Web Server\r\n&#x27;</span></span><br><span class="line">            response_body = output_data</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 目标路径没有文件, 抛出错误,返回404</span></span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">&#x27;No Such File!&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span> BaseException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="comment"># 404HTTP报文</span></span><br><span class="line">        <span class="comment"># print(e)</span></span><br><span class="line">        response_start_line = <span class="string">&#x27;HTTP/1.1 404 Not Found\r\n&#x27;</span></span><br><span class="line">        response_header = <span class="string">&#x27;Server: Web Server\r\n&#x27;</span></span><br><span class="line">        response_body = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 构造HTTP报文</span></span><br><span class="line">    response = generateHTTPResponse(response_start_line, response_header, response_body)</span><br><span class="line">    <span class="comment"># 向用户发送HTTP报文</span></span><br><span class="line">    connectionSocket.send(response)</span><br><span class="line">    <span class="comment"># 关闭连接套接字</span></span><br><span class="line">    connectionSocket.close()</span><br></pre></td></tr></table></figure>
+
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
+<li><p><code>import</code> 和 <code>from import</code> 有什么区别?</p>
+<p>  <code>import xx</code>相当于导入某个模块。对于模块中的函数，每次调用需要<code>模块.函数</code>来用。</p>
+<p>  <code>from xx import fun</code>直接导入模块中某函数，直接<code>fun()</code>就可用。</p>
+</li>
+</ul>
+
+  <p><a class="classtest-link" href="/tags/python/" rel="tag">python</a> — Apr 7, 2021</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>微信小程序架构的研究</title>
+  
+  <link rel="canonical" href="http://example.com/2021/04/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E7%9A%84%E7%A0%94%E7%A9%B6/">
+  
+  <meta name="description" content="此文写于 2019.3.17，经过两年的发展，这里的知识可能不再适用于目前的微信小程序。 什么是微信小程序？微信小程序是一种 hybird app（混合模式移动应用），介于 web app 和 native app 之间的 app，既具有 web app 跨平台开发的优势，又具有 native ap">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="微信小程序架构的研究" />
+  
+  <meta property="og:description" content="此文写于 2019.3.17，经过两年的发展，这里的知识可能不再适用于目前的微信小程序。 什么是微信小程序？微信小程序是一种 hybird app（混合模式移动应用），介于 web app 和 native app 之间的 app，既具有 web app 跨平台开发的优势，又具有 native ap">
+  
+  <meta property="og:url" content="http://example.com/2021/04/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E7%9A%84%E7%A0%94%E7%A9%B6/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="微信小程序架构的研究">
+  
+  <meta name="twitter:description" content="此文写于 2019.3.17，经过两年的发展，这里的知识可能不再适用于目前的微信小程序。 什么是微信小程序？微信小程序是一种 hybird app（混合模式移动应用），介于 web app 和 native app 之间的 app，既具有 web app 跨平台开发的优势，又具有 native ap">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/04/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E7%9A%84%E7%A0%94%E7%A9%B6/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>微信小程序架构的研究</h2>
+
+  <p>此文写于 2019.3.17，经过两年的发展，这里的知识可能不再适用于目前的微信小程序。</p>
+<h1 id="什么是微信小程序？"><a href="#什么是微信小程序？" class="headerlink" title="什么是微信小程序？"></a>什么是微信小程序？</h1><p>微信小程序是一种 <code>hybird app（混合模式移动应用）</code>，介于 <code>web app</code> 和 <code>native app</code> 之间的 app，既具有 <code>web app</code> 跨平台开发的优势，又具有 <code>native app</code> 良好的用户交互体验。</p>
+<aside>
+💡 事后来看，微信小程序的开发效率上是毋庸置疑的，但是其交互体验比较差，只能满足基本需要，无法进一步提升用户体验。—— 21.04.07
+
+</aside>
+
+<h1 id="微信小程序为什么这么快？"><a href="#微信小程序为什么这么快？" class="headerlink" title="微信小程序为什么这么快？"></a>微信小程序为什么这么快？</h1><p>打开小程序时， <code>Native</code> 预先加载一个 <code>webview</code>。当打开指定页面时，用默认数据直接渲染，请求数据返回时局部更新。 </p>
+<h1 id="小程序架构"><a href="#小程序架构" class="headerlink" title="小程序架构"></a>小程序架构</h1><h2 id="webview-是什么？"><a href="#webview-是什么？" class="headerlink" title="webview 是什么？"></a>webview 是什么？</h2><p><code>webview</code> 是手机中内置的一款高性能 <code>webkit 内核</code>浏览器（也就是 Chrome 使用的内核），没有提供地址栏和导航栏， <code>webview</code> 只是单纯的展示一个网页界面。 </p>
+<h2 id="什么是nwjs？"><a href="#什么是nwjs？" class="headerlink" title="什么是nwjs？"></a>什么是nwjs？</h2><p>简单是说就是 node+ webkit，node 提供给我们本地 api 能力，而 webkit 提供给我们 web 能力，两者结合就能让我们使用 js + html 实现本地应用程序。 </p>
+<h2 id="视图层与逻辑层"><a href="#视图层与逻辑层" class="headerlink" title="视图层与逻辑层"></a>视图层与逻辑层</h2><p>微信小程序框架由两个 <code>webview</code> 组成，分为 <code>视图层（View）</code>和 <code>逻辑层（App Service）</code>。视图层使用<code>webview</code> 渲染。逻辑层可理解为一个单独用于逻辑处理的页面，使用 <code>jscore</code> 运行。逻辑层具体的运行环境如下：</p>
+<ul>
+<li>iOS - JavaScriptCore</li>
+<li>Android - X5 JS解析器</li>
+<li>DevTool - nwjs Chrome 内核</li>
+</ul>
+<p>视图层和逻辑层通过系统层的JSBridage进行通信，逻辑层把数据变化通知到视图层，触发视图层页面更新，视图层把触发的事件通知到逻辑层进行业务处理。</p>
+<p><img src="/./images/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E7%9A%84%E7%A0%94%E7%A9%B6/wx01.jpg"></p>
+<p>这种结构完全隔开了视图层和逻辑层。和 Vue.js 和 React 有本质区别的是，小程序的逻辑层和视图层是运行在两个 <code>webview</code> 中的，而后面的框架都是运行在一个 <code>webview</code> 中的。</p>
+<p>这么做的优点在于视图层和逻辑层并行处理，避免了单线程模式下逻辑层卡顿引起的首屏渲染过长，完全采用数据驱动的模式，不提供直接操作 DOM 的接口，使用 Virtual DOM，进行局部更新。</p>
+<p>坏处在于不能灵活操作 DOM，复杂效果无法实现，且页面大小、打开页面的数量都受限制，数据传输需经过序列化和反序列化，用时较长。 </p>
+<h1 id="小程序启动、更新和运行机制"><a href="#小程序启动、更新和运行机制" class="headerlink" title="小程序启动、更新和运行机制"></a>小程序启动、更新和运行机制</h1><p>冷启动与热启动 小程序启动分为冷启动和热启动两种。<br>冷启动指用户首次打开或小程序被微信销毁后再次打开的情形，此时小程序需重新启动。<br>热启动指用户已打开小程序，在一段时间内重新打开该小程序，此时无需重新启动，只需将小程序从后台态切换到前台即可。</p>
+<h2 id="小程序的更新机制"><a href="#小程序的更新机制" class="headerlink" title="小程序的更新机制"></a>小程序的更新机制</h2><p>小程序冷启动时若发现有新版本，则会异步从 CDN 下载新版本的代码包，并同时使用本地已存在的代码包进行运行。下载完成后，下次冷启动时才会使用最新的代码包。若需要马上应用最新版本，可以使用<code>wx.getUpdateManage</code>进行处理。 </p>
+<h2 id="小程序的运行机制"><a href="#小程序的运行机制" class="headerlink" title="小程序的运行机制"></a>小程序的运行机制</h2><p><strong>小程序没有重启的机制。</strong></p>
+<p>小程序进入后台后，会在一定时间内保持运行状态，超过一定时间（5分钟）后会被微信主动销毁。当短时间（5s）内收到多次系统内存告警时，不管小程序是在前台还是后台，微信都会销毁小程序。</p>
+<p><img src="/./images/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E7%9A%84%E7%A0%94%E7%A9%B6/wx02.png"></p>
+<h1 id="常见优化建议"><a href="#常见优化建议" class="headerlink" title="常见优化建议"></a>常见优化建议</h1><h2 id="避免频繁使用setData"><a href="#避免频繁使用setData" class="headerlink" title="避免频繁使用setData"></a>避免频繁使用setData</h2><p>经过上面的学习我们知道，小程序的视图层和逻辑层是完全分离的，其通信完全依赖JSBridge，因此数据到达视图层并不是实时的。所以毫秒级地使用setData刷新数据会造成页面卡顿。一次性传输过多数据会造成增大脚本的编译事件，造成逻辑层的滞后。另外，大量的图片资源可能会导致内存告警，从而触发微信回收小程序。 </p>
+<h2 id="预先加载数据"><a href="#预先加载数据" class="headerlink" title="预先加载数据"></a>预先加载数据</h2><p>小程序在启动时，会直接将所有页面逻辑代码加载进内存，即使是暂时没有用到的页面也一样。页面跳转后，上一级页面的逻辑代码也不会从内存中消失，跳转后的页面甚至可以直接访问上一级页面中的数据。为了减少页面跳转加载的延时，常常在上一级页面就开始请求数据，以便在跳转后直接使用。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://www.bbs0101.com/archives/1495.html">http://www.bbs0101.com/archives/1495.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5afd136551882542682e6ad7">https://juejin.im/post/5afd136551882542682e6ad7</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1029663">https://cloud.tencent.com/developer/article/1029663</a></li>
+</ul>
+
+  <p> — Apr 7, 2021</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

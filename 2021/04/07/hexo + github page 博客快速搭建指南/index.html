@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>hexo + github page 博客快速搭建指南</title>
+  
+  <link rel="canonical" href="http://example.com/2021/04/07/hexo%20+%20github%20page%20%E5%8D%9A%E5%AE%A2%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">
+  
+  <meta name="description" content="前言该文章旨在帮助大家利用Hexo和github快速搭建自己的博客。整个流程在一个小时之内即可完成。 准备阶段什么是Hexo？Hexo是一款基于Node.js的静态博客框架，依赖少且易于使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。 安装gitLinux下安装gitDebi">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="hexo + github page 博客快速搭建指南" />
+  
+  <meta property="og:description" content="前言该文章旨在帮助大家利用Hexo和github快速搭建自己的博客。整个流程在一个小时之内即可完成。 准备阶段什么是Hexo？Hexo是一款基于Node.js的静态博客框架，依赖少且易于使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。 安装gitLinux下安装gitDebi">
+  
+  <meta property="og:url" content="http://example.com/2021/04/07/hexo%20+%20github%20page%20%E5%8D%9A%E5%AE%A2%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="hexo + github page 博客快速搭建指南">
+  
+  <meta name="twitter:description" content="前言该文章旨在帮助大家利用Hexo和github快速搭建自己的博客。整个流程在一个小时之内即可完成。 准备阶段什么是Hexo？Hexo是一款基于Node.js的静态博客框架，依赖少且易于使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。 安装gitLinux下安装gitDebi">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/04/07/hexo%20+%20github%20page%20%E5%8D%9A%E5%AE%A2%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>hexo + github page 博客快速搭建指南</h2>
+
+  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>该文章旨在帮助大家利用Hexo和github快速搭建自己的博客。整个流程在一个小时之内即可完成。</p>
+<h1 id="准备阶段"><a href="#准备阶段" class="headerlink" title="准备阶段"></a>准备阶段</h1><h2 id="什么是Hexo？"><a href="#什么是Hexo？" class="headerlink" title="什么是Hexo？"></a>什么是Hexo？</h2><p>Hexo是一款基于Node.js的静态博客框架，依赖少且易于使用，可以方便的生成静态网页托管在GitHub上，是搭建博客的首选框架。</p>
+<h2 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h2><h3 id="Linux下安装git"><a href="#Linux下安装git" class="headerlink" title="Linux下安装git"></a>Linux下安装git</h3><p>Debian或Ubuntu可直接通过sudo apt-get install git安装。其他Linux版本可先到官网下载源码，之后解压安装。 </p>
+<h3 id="Mac-OS下安装git"><a href="#Mac-OS下安装git" class="headerlink" title="Mac OS下安装git"></a>Mac OS下安装git</h3><p>推荐方法是直接从App Store安装Xcode，Xcode中集成了git。Xcode是Apple官方IDE，功能非常强大。好用的IDE加白送的插件，血赚啊。</p>
+<h3 id="Windows下安装git"><a href="#Windows下安装git" class="headerlink" title="Windows下安装git"></a>Windows下安装git</h3><p>在Windows下安装git，可直接从官网下载安装程序<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1kU5OCOB#list/path=%2Fpub%2Fgit">国内镜像</a>，然后按默认选项安装即可。安装后，运行cmd，输入<code>git --version</code>，出现类似<code>git version xxxxx</code>字段就说明安装成功。</p>
+<h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h2><p>Hexo是基于<a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">Node.js</a>。Node.js可从官网下载安装。注意安装时要勾选将Node.js添加到环境变量。安装后，运行cmd，输入<code>node -v</code>，出现<code>v x.xx.x</code>字段说明安装成功。</p>
+<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>在git和Node.js都安装完成后，便可以来安装Hexo了。使用npm命令安装Hexo客户端，在cmd输入 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>等待安装完成即可。为了检测安装的成果，可以生成一网站雏形，在cmd依次输入以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建一篇空白博客</span></span><br><span class="line">hexo new <span class="built_in">test</span></span><br><span class="line"><span class="comment">#生成博客静态网页</span></span><br><span class="line">hexo g</span><br><span class="line"><span class="comment">#在本地服务器预览</span></span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>打开浏览器，访问localhost:4000，即可看到网站雏形。</p>
+<h1 id="配置Hexo"><a href="#配置Hexo" class="headerlink" title="配置Hexo"></a>配置Hexo</h1><p>为了使你的博客可以通过github pages在线访问，必须创建一与你的github用户名同名的仓库，仓库名格式为<code>xxxxxx(username).github.io</code> 。</p>
+<p>在Hexo客户端安装完成后，初始化博客。该命令会在cmd所在的当前目录下创建一个名为blog的文件夹。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog</span><br></pre></td></tr></table></figure>
+
+<p>进入blog目录，找到<code>_config.yml</code>文件。这是整个个人博客的配置文件。下面要做的是将这个博客与你的github关联起来。打开配置文件，找到Deployment部分（一般在最下面），并更改为如下配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span>: gitrepo: <span class="comment">#仓库链接</span></span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure>
+
+<p>此时所有的配置就基本都已完成。但如果我们想将本地仓库部署到github上，还需git部署插件。在cmd中输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，我们便可以通过以下命令将本地仓库上传到github上。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>上传完成后，打开浏览器，输入你放置博客的仓库链接，会发现网站已上线，可通过网络访问。此时个人博客就搭建完成啦。之后想写新博客时，可先在本地使用<code>hexo new 博客标题</code>创建并编辑新的md文件，之后通过<code>hexo g</code>和<code>hexo d</code>生成博客静态网页并部署到github上即可。</p>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><ol>
+<li>如何为文章添加多个标签？答：使用以下语法<code>[tag1, tag2]</code>。注意逗号后面也要加空格。</li>
+<li>首页标签或文章数目不对怎么修正？答：按顺序使用以下命令。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#清除public文件夹及数据库文件</span></span><br><span class="line">hexo clean</span><br><span class="line"><span class="comment">#生成博客静态网页</span></span><br><span class="line">hexo g</span><br><span class="line"><span class="comment">#上传博客至github</span></span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>如何使Hexo编译时跳过某些文件？</li>
+</ol>
+<p>答：打开<code>_config.yaml</code>文件，找到<code>skip_render</code>选项。使用时应注意，此选项是以<code>source文件夹</code>为相对路径的。该选项最终是由<code>minimatch</code>这一npm包执行匹配的，因此具体设置可以参考<code>minimatch</code>的文档。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 跳过所有html文件</span></span><br><span class="line">skip_render: .html</span><br><span class="line"><span class="comment"># 跳过所有html和css文件</span></span><br><span class="line">skip_render: [.html, *.css]</span><br><span class="line"><span class="comment"># 这将会忽略对 ‘test-post.md’ 的渲染</span></span><br><span class="line">skip_render: _posts/test-post.md</span><br><span class="line"><span class="comment"># 跳过_posts文件夹下所有以0开头的文件</span></span><br><span class="line">skip_render: _posts/0*</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>博文中出现的所有的代码必须采用四个空格缩进的语法或三个&#96;&#96;&#96;包裹，不然会出现编译错误！</p>
+</li>
+<li><p>使用<code>hexo d</code>命令部署后部署无效，且无法在<code>github</code>上找到相关的<code>commit</code>记录？</p>
+</li>
+</ol>
+<p>答：删除根目录下的<code>.deploy_git</code>文件夹和<code>public</code>文件夹，再重新提交。</p>
+<ol start="6">
+<li>如何插入图片?</li>
+</ol>
+<p>答：使用如下语法<code>![](/images/img.png)</code>即可。在<code>hexo</code>中, 图片引用根目录是<code>source</code>文件夹。</p>
+<ol start="7">
+<li>如何给文章中的标题前自动加上序号?</li>
+</ol>
+<p>答: 安装 <code>hexo-heading-index</code> 插件, 并在顶层 <code>config.yaml</code> 中添加如下配置。如果不起作用, 就先使用 <code>hexo clean</code> 命令清理后再重新生成文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">heading_index:</span><br><span class="line">  enable: true</span><br><span class="line">  index_styles: &quot;&#123;1&#125; &#123;1&#125; &#123;1&#125; &#123;1&#125; &#123;1&#125; &#123;1&#125;&quot;</span><br><span class="line">  connector: &quot;.&quot;</span><br><span class="line">  global_prefix: &quot;&quot;</span><br><span class="line">  global_suffix: &quot;. &quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li>如何在文章内添加指向当前文章某些章节的链接？</li>
+</ol>
+<p>答：和链接的语法一样，只不过在链接地址部分填入<code>#章节标题</code>即可。<strong>这里的 # 个数不需要与标题前面的 # 个数保持一致，只需要一个就够了。</strong></p>
+<ol start="9">
+<li>Hexo 中，表格默认设置每列等分，很不美观，如何改变列宽？</li>
+</ol>
+<p>答：直接在 <code>.md</code> 文件中添加样式即可。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">th</span><span class="selector-pseudo">:nth-of-type</span>(<span class="number">1</span>)&#123;<span class="attribute">width</span>: <span class="number">20%</span>;&#125;</span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">th</span><span class="selector-pseudo">:nth-of-type</span>(<span class="number">2</span>)&#123;<span class="attribute">width</span>: <span class="number">20%</span>;&#125;</span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">th</span><span class="selector-pseudo">:nth-of-type</span>(<span class="number">3</span>)&#123;<span class="attribute">width</span>: <span class="number">60%</span>;&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如上我们规定，第一二列宽度为 20%，第三列为 60%。 具体效果见<a target="_blank" rel="noopener" href="http://idukelu.com/Hexo-%E4%B8%AD%E8%A1%A8%E6%A0%BC%E5%AE%BD%E5%BA%A6%E8%B0%83%E6%95%B4/">Hexo 中表格宽度调整</a></p>
+
+  <p><a class="classtest-link" href="/tags/%E7%94%A8%E8%BF%87%E7%9A%84%E5%BA%93-%E8%84%9A%E6%89%8B%E6%9E%B6/" rel="tag">用过的库/脚手架</a> — Apr 7, 2021</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

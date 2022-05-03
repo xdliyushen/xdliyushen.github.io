@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>React Suspense</title>
+  
+  <link rel="canonical" href="http://example.com/2022/03/03/React%20Suspense/">
+  
+  <meta name="description" content="Suspense 可用于为异步加载提供 fallback 视图。 12345678910111213141516171819202122232425262728import React, &amp;#123; Suspense &amp;#125; from &amp;#x27;react&amp;#x27;;import Rea">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="React Suspense" />
+  
+  <meta property="og:description" content="Suspense 可用于为异步加载提供 fallback 视图。 12345678910111213141516171819202122232425262728import React, &amp;#123; Suspense &amp;#125; from &amp;#x27;react&amp;#x27;;import Rea">
+  
+  <meta property="og:url" content="http://example.com/2022/03/03/React%20Suspense/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="React Suspense">
+  
+  <meta name="twitter:description" content="Suspense 可用于为异步加载提供 fallback 视图。 12345678910111213141516171819202122232425262728import React, &amp;#123; Suspense &amp;#125; from &amp;#x27;react&amp;#x27;;import Rea">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2022/03/03/React%20Suspense/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>React Suspense</h2>
+
+  <p>Suspense 可用于为异步加载提供 fallback 视图。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; <span class="title class_">Suspense</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ReactDOM</span> <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> powers = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">fetchPowers</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      powers = [<span class="string">&#x27;first&#x27;</span>, <span class="string">&#x27;second&#x27;</span>]</span><br><span class="line">      <span class="title function_">resolve</span>();</span><br><span class="line">    &#125;, <span class="number">3000</span>)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">RoutesPowers</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (!powers) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="title function_">fetchPowers</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> powers.<span class="title function_">map</span>(<span class="function"><span class="params">value</span> =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">key</span>=<span class="string">&#123;value&#125;</span>&gt;</span>&#123;value&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">p</span>&gt;</span>Loading<span class="tag">&lt;/<span class="name">p</span>&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">RoutesPowers</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;root&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="基本-demo"><a href="#基本-demo" class="headerlink" title="基本 demo"></a>基本 demo</h2><p>别的都不用看，关键点在于这一段：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!powers) &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="title function_">fetchPowers</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要想要 Suspense 的 fallback 起作用，就必须在 <strong>render 方法</strong>中 <strong>throw</strong> 一个 Promise 出去。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>在上面的代码中，有三个值得注意的点：</p>
+<ol>
+<li>必须是在 <strong>render 方法</strong>中（函数式组件就是在函数体内），在 useEffect 中 throw 出去不行，useCallback 里也不行</li>
+<li>必须是 <strong>throw</strong>，直接 return 出去不行，React 会报错。</li>
+<li>在 throw 出去的 Promise resolve 后，代码执行回到 render 方法中，<strong>此时的组件是一个全新的实例，</strong>之前的状态都不存在了，也无法对之前的状态进行修改！</li>
+</ol>
+<p>前两点比较简单，不细讲；着重说下第三点。为了验证第三点，我们先对基本 demo 做一些小小的修改：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; <span class="title class_">Suspense</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ReactDOM</span> <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">fetchPowers</span> = (<span class="params"></span>) =&gt; <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 注意这里~</span></span><br><span class="line">        <span class="title function_">resolve</span>([<span class="string">&#x27;first&#x27;</span>, <span class="string">&#x27;second&#x27;</span>]);</span><br><span class="line">    &#125;, <span class="number">3000</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">RoutesPowers</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> [powers, setPowers] = <span class="title class_">React</span>.<span class="title function_">useState</span>([]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 每次输出都是 []!</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(powers);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!powers.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="title function_">fetchPowers</span>()</span><br><span class="line">            .<span class="title function_">then</span>(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="comment">// [&#x27;first&#x27;, &#x27;second&#x27;]</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;data&#x27;</span>, data);</span><br><span class="line"></span><br><span class="line">                <span class="title function_">setPowers</span>(data);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> powers.<span class="title function_">map</span>(<span class="function"><span class="params">value</span> =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">key</span>=<span class="string">&#123;value&#125;</span>&gt;</span>&#123;value&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的代码是不是看起来很美好？当 Promise resolve 之后，在 .then 中改变组件状态，一切合情合理对吗？</p>
+<p>但现实并非如此，你会发现自己的 Suspense 一直在 loading 状态，即使我们的 .then 执行了之后，powers 状态也没有变化。证据就是这一行代码：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 每次输出都是 []!</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(powers);</span><br></pre></td></tr></table></figure>
+
+<p>通过这个 demo 我们可以看到，在 Promise resove 之后，React 创建了一个全新的组件实例，因此无法通过在 .then 中 setState 来对状态进行修改。</p>
+<p>这也暴露了一个问题，在使用 Suspense 的时候，不得不依赖外部变量来存储组件状态，才能保证状态更新的正常进行。那么有没有方便一点的方法呢？</p>
+<h2 id="recoil-Suspense"><a href="#recoil-Suspense" class="headerlink" title="recoil + Suspense"></a>recoil + Suspense</h2><aside>
+💡 recoil 的 atom 基本等同于 useState，selector 基本等同于 useMemo。
+
+</aside>
+
+<p>recoil 的 selector 针对 Suspense 做了处理，当 selector 的 get 方法返回的是一个 Promise 的时候，recoil 会直接把这个 Promise throw 出去，以便上层的 Suspense 能够检测到。更绝的是，recoil 会缓存 Promise 返回的结果，也就是说不用担心重新渲染是 get 方法会重复执行。</p>
+<p>如果需要更新数据，必须使用 <code>useRecoilRefresher_UNSTABLE</code> 返回的函数，手动刷新。调用刷新函数手动刷新时，会重新触发 Suspense 的 loading 状态。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; <span class="title class_">Suspense</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ReactDOM</span> <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    <span class="title class_">RecoilRoot</span>, selector, useRecoilRefresher_UNSTABLE, useRecoilValue</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;recoil&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> powsersSelector = <span class="title function_">selector</span>(&#123;</span><br><span class="line">    <span class="attr">key</span>: <span class="string">&#x27;powers&#x27;</span>,</span><br><span class="line">    <span class="attr">get</span>: <span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 注意这里~</span></span><br><span class="line">            <span class="title function_">resolve</span>([<span class="string">&#x27;first&#x27;</span>, <span class="string">&#x27;second&#x27;</span>]);</span><br><span class="line">        &#125;, <span class="number">3000</span>);</span><br><span class="line">    &#125;),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">RoutesPowers</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> powers = <span class="title function_">useRecoilValue</span>(powsersSelector);</span><br><span class="line">    <span class="keyword">const</span> refresh = <span class="title function_">useRecoilRefresher_UNSTABLE</span>(powsersSelector);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;refresh&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;refresh&#125;</span>&gt;</span>refresh<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;list&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">                &#123;powers.map(value =&gt; <span class="tag">&lt;<span class="name">div</span> <span class="attr">key</span>=<span class="string">&#123;value&#125;</span>&gt;</span>&#123;value&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span>)&#125;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">RecoilRoot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">p</span>&gt;</span>Loading<span class="tag">&lt;/<span class="name">p</span>&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">RoutesPowers</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">RecoilRoot</span>&gt;</span></span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;root&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="withSuspense"><a href="#withSuspense" class="headerlink" title="withSuspense"></a>withSuspense</h2><p>如果手动为每个组件包裹 Suspense，未免有点太繁琐了。为此，我们可以做个高阶组件来做这件事。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; <span class="title class_">Suspense</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ErrorBoundary</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react-error-boundary&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">withSuspense</span>(<span class="params">&#123; children &#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">ErrorBoundary</span> <span class="attr">FallbackComponent</span>=<span class="string">&#123;(&#123;</span> <span class="attr">error</span> &#125;) =&gt;</span> (</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;error&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        )&#125;&gt;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;(</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                &lt;<span class="attr">div</span>&gt;</span>loading...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            )&#125;&gt;</span></span><br><span class="line"><span class="language-xml">                &#123; children &#125;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">ErrorBoundary</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> withSuspense;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/concurrent-mode-suspense.html">https://zh-hans.reactjs.org/docs/concurrent-mode-suspense.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/63517534/react-suspense-is-not-working-as-intended">https://stackoverflow.com/questions/63517534/react-suspense-is-not-working-as-intended</a></li>
+<li><a target="_blank" rel="noopener" href="https://recoiljs.org/zh-hans/docs/guides/asynchronous-data-queries/">https://recoiljs.org/zh-hans/docs/guides/asynchronous-data-queries/</a></li>
+</ul>
+
+  <p> — Mar 3, 2022</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>HTTP权威指南（一）：HTTP 概述</title>
+  
+  <link rel="canonical" href="http://example.com/2021/12/06/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AHTTP%20%E6%A6%82%E8%BF%B0/">
+  
+  <meta name="description" content="HTTP 是什么？HTTP 是一种应用层协议，用于沟通 web 浏览器以及服务器，让用户能够足不出户的访问互联网上的各种资源，是现代互联网的基础。 HTTP 使用 TCP 来进行连接，可以保证数据传输的顺序以及完整性。 web 浏览器端和服务器是如何通信的？web 浏览器端和服务器通过 HTTP 请">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="HTTP权威指南（一）：HTTP 概述" />
+  
+  <meta property="og:description" content="HTTP 是什么？HTTP 是一种应用层协议，用于沟通 web 浏览器以及服务器，让用户能够足不出户的访问互联网上的各种资源，是现代互联网的基础。 HTTP 使用 TCP 来进行连接，可以保证数据传输的顺序以及完整性。 web 浏览器端和服务器是如何通信的？web 浏览器端和服务器通过 HTTP 请">
+  
+  <meta property="og:url" content="http://example.com/2021/12/06/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AHTTP%20%E6%A6%82%E8%BF%B0/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HTTP权威指南（一）：HTTP 概述">
+  
+  <meta name="twitter:description" content="HTTP 是什么？HTTP 是一种应用层协议，用于沟通 web 浏览器以及服务器，让用户能够足不出户的访问互联网上的各种资源，是现代互联网的基础。 HTTP 使用 TCP 来进行连接，可以保证数据传输的顺序以及完整性。 web 浏览器端和服务器是如何通信的？web 浏览器端和服务器通过 HTTP 请">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/12/06/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9AHTTP%20%E6%A6%82%E8%BF%B0/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>HTTP权威指南（一）：HTTP 概述</h2>
+
+  <h2 id="HTTP-是什么？"><a href="#HTTP-是什么？" class="headerlink" title="HTTP 是什么？"></a>HTTP 是什么？</h2><p>HTTP 是一种应用层协议，用于沟通 web 浏览器以及服务器，让用户能够足不出户的访问互联网上的各种资源，是现代互联网的基础。</p>
+<p>HTTP 使用 TCP 来进行连接，可以保证数据传输的顺序以及完整性。</p>
+<h2 id="web-浏览器端和服务器是如何通信的？"><a href="#web-浏览器端和服务器是如何通信的？" class="headerlink" title="web 浏览器端和服务器是如何通信的？"></a>web 浏览器端和服务器是如何通信的？</h2><p>web 浏览器端和服务器通过 HTTP 请求来互相通信。</p>
+<h2 id="什么是-MIME？"><a href="#什么是-MIME？" class="headerlink" title="什么是 MIME？"></a>什么是 MIME？</h2><p><code>MIME</code> 的全称是 <code>Mutiple Internet Mail Extensiton</code> ，翻译为 <code>媒体类型</code> 。 </p>
+<p>在互联网上的文件有文本、图片、视频等很多种类型，在 web 端和服务器端进行通信时，服务器会为所有 HTTP 数据对象（body）附加一个 <code>MIME</code> 类型（content-type），使得 web 端能够区分不同类型文件。</p>
+<p><code>MIME</code> 是一串字符串，由主要对象类型和子类型构成，中间通过斜杠进行区分。如 json 类型可以表示为 application&#x2F;json；普通的 HTML 文本类型可以表示为 text&#x2F;html 等。</p>
+<h2 id="URI-vs-URL-vs-URN？"><a href="#URI-vs-URL-vs-URN？" class="headerlink" title="URI vs URL vs URN？"></a>URI vs URL vs URN？</h2><p><code>URI（Uniform Resource Identifier，统一资源标识符）</code> 是一个资源在整个互联网范围内的唯一标识，用于指示并定位资源。<strong>URI 有两种形式，分别是 URL 和 URN。</strong></p>
+<p><code>URL（Uniform Resource Locator，统一资源定位符）</code> 是 URI 最常见的表示形式，它说明了一个资源在某台特定服务器上的位置。</p>
+<p>URL 通常由三部分构成：</p>
+<ul>
+<li>协议头（scheme），表明资源应该通过哪种协议类型访问。最常见的就是 http:&#x2F;&#x2F; 这一协议头。</li>
+<li>服务器的因特网地址。可以是域名，也可以是 IP 地址。如 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 。</li>
+<li>剩下的部分指明了资源位于该服务器上的位置。如 &#x2F;dist&#x2F;bubble.jpg。</li>
+</ul>
+<p><strong>如今，几乎所有的 URI 都是 URL。</strong></p>
+<p><code>URI（Uniform Resource Name，统一资源名）</code>是作为特定资源的唯一名称使用的。通过使用这种与位置无关的表述，让我们得以把资源四处搬运存储。同时 URN 还是与协议无关的，也就是说我们可以通过不同的协议访问同一个资源。</p>
+<p><strong>URN 目前还在实验阶段，并未大规模使用。</strong>以目前的网络架构，并不支持这种分布式解析资源位置的服务。</p>
+<h2 id="什么是-HTTP-事务？"><a href="#什么是-HTTP-事务？" class="headerlink" title="什么是 HTTP 事务？"></a>什么是 HTTP 事务？</h2><p>一个 HTTP 事务是由一个客户端发送的 HTTP 请求和一个服务器发送的 HTTP 响应结果组成的。这种通信是通过名为 <code>HTTP 报文（HTTP Message）</code> 的格式化数据块进行的。</p>
+<p>在客户端发往服务器的报文中，会指定一个 <code>HTTP 方法（HTTP Method）</code>。HTTP 方法用于指定服务器收到报文后，应该进行的操作。常见的 HTTP 方法有：GET、POST、DELETE、PUT 和 HEAD。</p>
+<aside>
+💡 PUT vs POST
+
+<p>二者都用于向服务器提交数据。其中，PUT 会将来自客户端的数据保存为文件；POST 则常常用于传递信息，如提交表单等。<br>二者最根本性的区别在于是否幂等。所谓幂等，就是指相同的请求，无论执行多少次，结果都是一样的（优点类似于纯函数）。<br>一般来说，PUT 是幂等方法，POST 不是。当然实现上可能会有偏差，你要非把 PUT 变成非幂等的也没人能说啥，但至少不太符合直觉和 RestFul API 的设计规范。</p>
+<p>参考资料：<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/630453/what-is-the-difference-between-post-and-put-in-http">https://stackoverflow.com/questions/630453/what-is-the-difference-between-post-and-put-in-http</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/news/39873">https://cloud.tencent.com/developer/news/39873</a></p>
+</aside>
+
+<p>在服务器发往客户端的响应报文中，会携带一个状态码，告知客户端请求是否成功或者是否需要进行进一步的操作。常见的状态码：200、301、302、404、500。</p>
+<h2 id="HTTP-报文的结构？"><a href="#HTTP-报文的结构？" class="headerlink" title="HTTP 报文的结构？"></a>HTTP 报文的结构？</h2><p>HTTP 报文分为请求报文和响应报文，二者的格式是相同的。HTTP 报文都是字符串，可以很方便的进行读写。</p>
+<p>HTTP 报文分为三个部分：</p>
+<ul>
+<li>起始行：报文的第一行就是起始行。起始行一般包括 HTTP 方法、HTTP 版本、请求链接以及状态码等信息。</li>
+<li>首部字段：紧接着起始行的，是首部字段。每个 HTTP 报文都可以有零个或多个首部字段。在首部字段的最后，是一个空行，表示首部字段已结束。</li>
+<li>主体：在空行之后，便是报文主体部分。其中，请求报文主体中会包含要向服务器传递的数据，响应报文主体中会包含要返回给客户端的数据。与起始行和首部不同，主体可以包含任意格式的数据。</li>
+</ul>
+<h2 id="HTTP-传输的步骤？"><a href="#HTTP-传输的步骤？" class="headerlink" title="HTTP 传输的步骤？"></a>HTTP 传输的步骤？</h2><p>HTTP 是应用层协议，通过 TCP（传输层）&#x2F; IP（网络层）来传输数据。</p>
+<p>HTTP 传输的步骤为：</p>
+<ol>
+<li>客户端解析 URL，获取目标主机名（域名）。</li>
+<li>客户端通过 DNS 解析域名，获取目标主机的 IP 地址。</li>
+<li>客户端将端口号（如果有的话）从 URL 中解析出来（TCP 默认为 80 端口）。</li>
+<li>客户端与目标主机建立 TCP 连接。</li>
+<li>客户端向目标主机发送 HTTP 请求报文。</li>
+<li>服务器向客户端发送 HTTP 响应报文。</li>
+<li>客户端处理响应报文，展示内容。</li>
+</ol>
+<p>上面的只是简略版，省去了 N 多细节，比如 TCP 连接如何建立，TCP 连接的复用等，在这里就不展开了。</p>
+<h2 id="HTTP-协议有哪些版本？"><a href="#HTTP-协议有哪些版本？" class="headerlink" title="HTTP 协议有哪些版本？"></a>HTTP 协议有哪些版本？</h2><p>HTTP 有 5 个大版本，按照时间排序分别为：</p>
+<ul>
+<li>HTTP&#x2F;0.9：设计有很大缺陷，如只支持 GET 方法、不支持多媒体内容等。因此退出不就就被 HTTP&#x2F;1.0 取代了。</li>
+<li>HTTP&#x2F;1.0：第一个广泛应用的版本。与 HTTP&#x2F;0.9 相比，增加了诸如 HTTP 版本号、各种头部字段、新的请求方法等若干功能。</li>
+<li>HTTP&#x2F;1.0+：添加了许多新特性，如 keep-alive、代理连接等。这些功能虽然得到了广泛应用，但并未被纳入到官方标准中，因此被称为 HTTP&#x2F;1.0+。</li>
+<li>HTTP&#x2F;1.1：目前被广泛应用的版本。在 HTTP&#x2F;1.0 基础上做了一些修正。</li>
+<li>HTTP-NG（HTTP&#x2F;2.0）：尚未应用，未来可期。</li>
+</ul>
+<h2 id="常见的构成互联网的程序"><a href="#常见的构成互联网的程序" class="headerlink" title="常见的构成互联网的程序"></a>常见的构成互联网的程序</h2><p>鉴定网络热门程序的视频（小亮口吻</p>
+<ul>
+<li>代理：转发请求。位于客户端和服务器之间的程序。代理既可以作为客户端向服务器发送请求，也可以作为服务器向客户端发送响应。</li>
+<li>缓存：资源缓存服务器，将距离较远的服务器上的资源缓存下来，使得在客户端请求资源时，不必从距离很远的服务器上取得。</li>
+<li>网关：一般主要职责是协议转换，如将 HTTP 转换为 HTTPS。</li>
+<li>隧道：隧道是建立起来之后，就会在两条连接之间进行盲转发的 HTTP 程序。这种程序会在第 8 章中细讲。</li>
+<li>Agent 代理：所有发送 web 请求的应用程序都是 Agent 代理，如浏览器、爬虫等。</li>
+</ul>
+<p>需要说明的是，虽然这些程序的职责各有不同，但程序彼此之间却并没有十分明显的职责界限，一个程序常常可以担任多种工作，强行区分并没有太大意义。</p>
+<p>除此之外，还有一些常见程序没有列举出来，如反向代理等，这里不做赘述。</p>
+<h2 id="补充知识：Telnet-和-netcat"><a href="#补充知识：Telnet-和-netcat" class="headerlink" title="补充知识：Telnet 和 netcat"></a>补充知识：Telnet 和 netcat</h2><p>Telnet 是用于模拟 HTTP 客户端的程序，但其并不能作为服务器使用。</p>
+<p>netcat 是可操作 TCP、UDP 和 HTTP 流量的程序，且可为其编写脚本。</p>
+<p>二者的详细说明参见：<a target="_blank" rel="noopener" href="https://www.notion.so/HTTP-Telnet-netcat-a7d1b3766e154525aaebfc253622d884">HTTP 权威指南补充资料：Telnet &amp; netcat</a></p>
+
+  <p><a class="classtest-link" href="/tags/HTTP/" rel="tag">HTTP</a> — Dec 6, 2021</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

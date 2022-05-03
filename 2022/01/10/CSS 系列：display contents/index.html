@@ -11,38 +11,34 @@
   <meta charset="utf-8">
 
   
-  <title>All Posts - Mett Li</title>
+  <title>CSS 系列：display contents</title>
   
-  <link rel="canonical" href="http://example.com/archives/2022/01/">
+  <link rel="canonical" href="http://example.com/2022/01/10/CSS%20%E7%B3%BB%E5%88%97%EF%BC%9Adisplay%20contents/">
   
-  <meta name="description" content="">
+  <meta name="description" content="举个例子： 1234567.text &amp;#123;      // display: contents;      font-size: 20px;      color: purple;      background-color: pink;      border: 1px solid reb">
   
   
   <meta name="author" content="Mett Li">
   
   
-  <meta property="og:image" content="http://example.com/images/thumbnail.jpg">
-  
   
   <meta property="og:site_name" content="Hexo" />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="All Posts - Mett Li" />
+  <meta property="og:title" content="CSS 系列：display contents" />
   
-  <meta property="og:description" content="">
+  <meta property="og:description" content="举个例子： 1234567.text &amp;#123;      // display: contents;      font-size: 20px;      color: purple;      background-color: pink;      border: 1px solid reb">
   
-  <meta property="og:url" content="http://example.com/archives/2022/01/" />
+  <meta property="og:url" content="http://example.com/2022/01/10/CSS%20%E7%B3%BB%E5%88%97%EF%BC%9Adisplay%20contents/" />
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="All Posts - Mett Li">
+  <meta name="twitter:title" content="CSS 系列：display contents">
   
-  <meta name="twitter:description" content="">
-  
-  
-  
-  <meta name="twitter:image" content="http://example.com/images/thumbnail.jpg">
+  <meta name="twitter:description" content="举个例子： 1234567.text &amp;#123;      // display: contents;      font-size: 20px;      color: purple;      background-color: pink;      border: 1px solid reb">
   
   
-  <meta name="twitter:url" content="http://example.com/archives/2022/01/" />
+  
+  
+  <meta name="twitter:url" content="http://example.com/2022/01/10/CSS%20%E7%B3%BB%E5%88%97%EF%BC%9Adisplay%20contents/" />
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -195,96 +191,25 @@
 </div>
 
         <div class="trans">
-          
-<h2>All Posts</h2>
+            <h2>CSS 系列：display contents</h2>
 
+  <p>举个例子：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.text</span> &#123;</span><br><span class="line">      <span class="comment">// display: contents;</span></span><br><span class="line">      <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">      <span class="attribute">color</span>: purple;</span><br><span class="line">      <span class="attribute">background-color</span>: pink;</span><br><span class="line">      <span class="attribute">border</span>: <span class="number">1px</span> solid rebeccapurple;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
-    <article>
-      <div class="row">
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">className</span>=<span class="string">&quot;text&quot;</span>&gt;</span>123456<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-        <div class="three columns left lit">
-          <p class="bottom">Jan 31, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/31/hello-world/" class="">
-            
-              Hello World
-            
-          </a>
-        </div>
-      </div>
-    </article>
+<p>正常情况下是这样的：</p>
+<p><img src="/./images/CSS%20%E7%B3%BB%E5%88%97%EF%BC%9Adisplay%20contents/%E6%88%AA%E5%B1%8F2022-01-10_%E4%B8%8A%E5%8D%8811.57.17.png"></p>
+<p>在加上 <code>display: contents</code> 后：</p>
+<p><img src="/./images/CSS%20%E7%B3%BB%E5%88%97%EF%BC%9Adisplay%20contents/%E6%88%AA%E5%B1%8F2022-01-10_%E4%B8%8A%E5%8D%8811.58.03.png"></p>
+<p>可以看到，背景色和边框的样式都消失了，符合我们所说的把标签删除，只剩文本的展示。不止如此，padding 和 margin 值也会消失。</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>这东西的应用场景和 react 中的空标签有点类似。当你需要一个标签来定位或是干其他的事情，同时又不想让这个标签影响展示内容的时候，就可以用这个属性。</p>
+<h2 id="can-i-use"><a href="#can-i-use" class="headerlink" title="can i use"></a>can i use</h2><p><img src="/./images/CSS%20%E7%B3%BB%E5%88%97%EF%BC%9Adisplay%20contents/%E6%88%AA%E5%B1%8F2022-01-10_%E4%B8%8B%E5%8D%882.58.40.png"></p>
+<p>支持率尚可，但还没达到能在项目中使用的地步。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://futu.im/article/how-display-content-works/">https://futu.im/article/how-display-content-works/</a></p>
 
-    <article>
-      <div class="row">
-
-        <div class="three columns left lit">
-          <p class="bottom">Jan 19, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/19/git%20hooks%20%E8%AF%A6%E8%A7%A3/" class="">
-            
-              git hooks 详解
-            
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article>
-      <div class="row">
-
-        <div class="three columns left lit">
-          <p class="bottom">Jan 17, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/17/HTTP%20%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9Aweb%20%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="">
-            
-              HTTP 权威指南（五）：web 服务器
-            
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article>
-      <div class="row">
-
-        <div class="three columns left lit">
-          <p class="bottom">Jan 10, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/10/CSS%20%E7%B3%BB%E5%88%97%EF%BC%9Adisplay%20contents/" class="">
-            
-              CSS 系列：display contents
-            
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <article>
-      <div class="row">
-
-        <div class="three columns left lit">
-          <p class="bottom">Jan 6, 2022</p>
-        </div>
-        <div class="nine columns left mb-3">
-          <a href="/2022/01/06/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AHTTP%E6%8A%A5%E6%96%87/" class="">
-            
-              HTTP权威指南（三）：HTTP报文
-            
-          </a>
-        </div>
-      </div>
-    </article>
-
-<div class="pagination-bar">
-  <ul class="pagination">
-    
-    
-  </ul>
-</div>
+  <p> — Jan 10, 2022</p>
+  
 
 
         </div>

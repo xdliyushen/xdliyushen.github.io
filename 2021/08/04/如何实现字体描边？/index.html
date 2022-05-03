@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>如何实现字体描边？</title>
+  
+  <link rel="canonical" href="http://example.com/2021/08/04/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/">
+  
+  <meta name="description" content="Outline effect to text  下面是一些比较没用的解决方案。 前置知识：描边的三种方式在 ps 中，可以选择描边方式，分别有：外描边、居中描边以及内描边。  常见的实现字体描边方式svgsvg 实现字体描边很简单，通过 &amp;lt;text&amp;gt; 搭配 fill 和 stroke 属">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="如何实现字体描边？" />
+  
+  <meta property="og:description" content="Outline effect to text  下面是一些比较没用的解决方案。 前置知识：描边的三种方式在 ps 中，可以选择描边方式，分别有：外描边、居中描边以及内描边。  常见的实现字体描边方式svgsvg 实现字体描边很简单，通过 &amp;lt;text&amp;gt; 搭配 fill 和 stroke 属">
+  
+  <meta property="og:url" content="http://example.com/2021/08/04/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="如何实现字体描边？">
+  
+  <meta name="twitter:description" content="Outline effect to text  下面是一些比较没用的解决方案。 前置知识：描边的三种方式在 ps 中，可以选择描边方式，分别有：外描边、居中描边以及内描边。  常见的实现字体描边方式svgsvg 实现字体描边很简单，通过 &amp;lt;text&amp;gt; 搭配 fill 和 stroke 属">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/08/04/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>如何实现字体描边？</h2>
+
+  <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/4919076/outline-effect-to-text">Outline effect to text</a></p>
+<p><img src="/./images/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/%E6%88%AA%E5%B1%8F2021-12-23_%E4%B8%8B%E5%8D%884.44.31.png"></p>
+<p>下面是一些比较没用的解决方案。</p>
+<h1 id="前置知识：描边的三种方式"><a href="#前置知识：描边的三种方式" class="headerlink" title="前置知识：描边的三种方式"></a>前置知识：描边的三种方式</h1><p>在 ps 中，可以选择描边方式，分别有：外描边、居中描边以及内描边。</p>
+<p><img src="/./images/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/%E6%88%AA%E5%B1%8F2021-08-04_%E4%B8%8B%E5%8D%884.36.47.png"></p>
+<h1 id="常见的实现字体描边方式"><a href="#常见的实现字体描边方式" class="headerlink" title="常见的实现字体描边方式"></a>常见的实现字体描边方式</h1><h2 id="svg"><a href="#svg" class="headerlink" title="svg"></a>svg</h2><p>svg 实现字体描边很简单，通过 <code>&lt;text&gt;</code> 搭配 <code>fill</code> 和 <code>stroke</code> 属性即可。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">text</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">				// 字体颜色</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        // 在 <span class="attr">svg</span> 中，字体颜色是通过 <span class="attr">fill</span> 属性来设置， <span class="attr">color</span> 属性不起作用。</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">fill</span>=<span class="string">&quot;#fff&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">				// 描边颜色</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">stroke</span>=<span class="string">&quot;#FF9600&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">				// 描边宽度</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">strokeWidth</span>=<span class="string">&quot;1px&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">				250g</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span></span><br><span class="line">&lt;/svg&gt;</span><br></pre></td></tr></table></figure>
+
+<p>最终效果如下：</p>
+<p><img src="/./images/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/%E6%88%AA%E5%B1%8F2021-08-04_%E4%B8%8B%E5%8D%884.51.56.png"></p>
+<h2 id="webkit-text-stroke"><a href="#webkit-text-stroke" class="headerlink" title="webkit-text-stroke"></a>webkit-text-stroke</h2><p>webkit-text-stroke 是一个可用于字体描边的 css 属性。</p>
+<p><img src="/./images/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/%E6%88%AA%E5%B1%8F2021-08-04_%E4%B8%8B%E5%8D%885.01.23.png"></p>
+<p>先看 can i use，可以看到虽然 webkit 私有前缀仍没有去掉，但各大厂商对该属性的支持性还是不错的。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// html</span></span><br><span class="line">&lt;p className=<span class="string">&quot;text&quot;</span>&gt;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// css</span></span><br><span class="line">.<span class="property">text</span> &#123;</span><br><span class="line">		<span class="comment">// 第一个值为描边宽度, 第二个值为描边颜色</span></span><br><span class="line">		-webkit-text-<span class="attr">stroke</span>: 1px #<span class="title class_">FF9600</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终效果同上图。</p>
+<h1 id="canvas"><a href="#canvas" class="headerlink" title="canvas"></a>canvas</h1><p>现在我们要祭出大杀器了：canvas。</p>
+<p>在 canvas 中绘制文字的 api 有两个：</p>
+<ul>
+<li><code>fillText(text, x, y [, maxWidth])</code>: 在指定的(x,y)位置填充指定的文本，绘制的最大宽度是可选的</li>
+<li><code>strokeText(text, x, y [, maxWidth])</code>: 在指定(x,y)位置绘制带边框的文本，绘制的最大宽度是可选的。</li>
+</ul>
+<p>首先要明确一点，<strong>在 canvas 中文字的描边方式也是居中描边！</strong></p>
+<p>对此，我们的解决办法是先画文字的边框，再在原位置上画文字。后面画的文字会把居中描边中向文字内部延伸的部分给盖住。因此，如果想让文字具有 1px 的边框，则画文字边框时宽度应为 2px。上代码：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">drawStroked</span>(<span class="params">text, x, y</span>) &#123;</span><br><span class="line">    ctx.<span class="property">font</span> = <span class="string">&#x27;80px Sans-serif&#x27;</span>;</span><br><span class="line">    ctx.<span class="property">strokeStyle</span> = <span class="string">&#x27;black&#x27;</span>;</span><br><span class="line">    ctx.<span class="property">lineWidth</span> = <span class="number">8</span>;</span><br><span class="line">    ctx.<span class="title function_">strokeText</span>(text, x, y);</span><br><span class="line">    ctx.<span class="property">fillStyle</span> = <span class="string">&#x27;white&#x27;</span>;</span><br><span class="line">    ctx.<span class="title function_">fillText</span>(text, x, y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">drawStroked</span>(<span class="string">&quot;37°&quot;</span>, <span class="number">50</span>, <span class="number">150</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/./images/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/Untitled.png"></p>
+<p>这种效果目前来看是最好的。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><strong>而无论是 css、svg 还是 canvas，文字描边的方式都是居中描边，且暂时没有属性来修改描边方式。</strong></p>
+<p>一般情况下，描边方式对于展示的影响不是很大，但效果在 stroke-width 变粗时就不是很好了，居中描边中内描边的部分会阻挡文字的正常显示。</p>
+<p><img src="/./images/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/%E6%88%AA%E5%B1%8F2021-08-04_%E4%B8%8B%E5%8D%884.44.44.png"></p>
+<p>上图中，两行字的字体大小一样，仅 stroke-width 发生了变化。</p>
+<p>对于 css 和 svg 而言，这个问题暂时是无解的。但对于 canvas 而言，这个问题可以通过我们上面提到的方法来完美解决。</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p>在调研过程中还遇到了一些别的解决字体描边内描边过大的方案，一并放在这里了：</p>
+<ul>
+<li><p>调大字号：调大字号后，中间的部分也会变宽。</p>
+</li>
+<li><p>如果只显示数字或字母的话，可以让视觉同学将每个数字或字母都单独切成图，显示的时候根据内容做拼接。</p>
+</li>
+<li><p>还有一个属性叫 paint-order，可以指定是先绘制 fill 还是先绘制 stroke，不够支持率十分感人，根本不能用。</p>
+<p>  <img src="/./images/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E4%BD%93%E6%8F%8F%E8%BE%B9%EF%BC%9F/%E6%88%AA%E5%B1%8F2021-08-04_%E4%B8%8B%E5%8D%885.37.26.png"></p>
+</li>
+</ul>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/26634201/add-stroke-around-text-on-the-outside-with-css">https://stackoverflow.com/questions/26634201/add-stroke-around-text-on-the-outside-with-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://css-tricks.com/almanac/properties/t/text-stroke/">https://css-tricks.com/almanac/properties/t/text-stroke/</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/-webkit-text-stroke">https://developer.mozilla.org/zh-CN/docs/Web/CSS/-webkit-text-stroke</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000037749421">https://segmentfault.com/a/1190000037749421</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/13636845/10726217">https://stackoverflow.com/a/13636845/10726217</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/4919076/outline-effect-to-text">https://stackoverflow.com/questions/4919076/outline-effect-to-text</a></li>
+</ul>
+
+  <p> — Aug 4, 2021</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

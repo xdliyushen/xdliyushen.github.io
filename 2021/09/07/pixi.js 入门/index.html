@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>pixi.js 入门</title>
+  
+  <link rel="canonical" href="http://example.com/2021/09/07/pixi.js%20%E5%85%A5%E9%97%A8/">
+  
+  <meta name="description" content="这里只介绍了最基本的用法，更加详细的教程和文档可以参见这里：  https://pixijs.io/examples/#/demos-basic/container.js https://github.com/Zainking/LearningPixi#application  创建 app要想使用">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="pixi.js 入门" />
+  
+  <meta property="og:description" content="这里只介绍了最基本的用法，更加详细的教程和文档可以参见这里：  https://pixijs.io/examples/#/demos-basic/container.js https://github.com/Zainking/LearningPixi#application  创建 app要想使用">
+  
+  <meta property="og:url" content="http://example.com/2021/09/07/pixi.js%20%E5%85%A5%E9%97%A8/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="pixi.js 入门">
+  
+  <meta name="twitter:description" content="这里只介绍了最基本的用法，更加详细的教程和文档可以参见这里：  https://pixijs.io/examples/#/demos-basic/container.js https://github.com/Zainking/LearningPixi#application  创建 app要想使用">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2021/09/07/pixi.js%20%E5%85%A5%E9%97%A8/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>pixi.js 入门</h2>
+
+  <p>这里只介绍了最基本的用法，更加详细的教程和文档可以参见这里：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pixijs.io/examples/#/demos-basic/container.js">https://pixijs.io/examples/#/demos-basic/container.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Zainking/LearningPixi#application">https://github.com/Zainking/LearningPixi#application</a></li>
+</ul>
+<h1 id="创建-app"><a href="#创建-app" class="headerlink" title="创建 app"></a>创建 app</h1><p>要想使用 pixi.js，首先我们需要创建一个 pixi.js app，pixi.js app 会创建一个 canvas 元素，我们后续所有的内容都会显示在这个 canvas 元素内。因此我们在创建完 app 后，还需要将它添加到 DOM 中去。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="variable constant_">PIXI</span>.<span class="title class_">Application</span>(&#123;<span class="attr">width</span>: <span class="number">256</span>, <span class="attr">height</span>: <span class="number">256</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 canvas 元素添加到 DOM 中</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(app.<span class="property">view</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码，我们创建一个宽高均为 256 的 canvas 元素，并将创建好的 canvas 元素添加到了 DOM 中。 最终效果应该是这样的：</p>
+<p><img src="/./images/pixi.js%20%E5%85%A5%E9%97%A8/Untitled.png"></p>
+<p>这个黑色的方块就是我们创建的 canvas 元素。</p>
+<h1 id="创建和显示-Sprite"><a href="#创建和显示-Sprite" class="headerlink" title="创建和显示 Sprite"></a>创建和显示 Sprite</h1><p>仅有画布是不够的，接下来我们要向画布中添加内容。</p>
+<p>首先我们需要创建要展示的内容。在 pixi.js 中，有一类被称为 Sprite 的特殊对象，一个 Sprite 通常代表一个图片。通过改变 Sprite 的位置、宽高等设置，以此来产生交互和动画。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sprite = <span class="variable constant_">PIXI</span>.<span class="property">Sprite</span>.<span class="title function_">from</span>(<span class="string">&#x27;bunny.png&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置中心点-类比于 transform-origin</span></span><br><span class="line">sprite.<span class="property">anchor</span>.<span class="title function_">set</span>(<span class="number">0.5</span>);</span><br><span class="line"><span class="comment">// 将 sprite 的位置移动到画布中央</span></span><br><span class="line">sprite.<span class="property">x</span> = app.<span class="property">screen</span>.<span class="property">width</span> / <span class="number">2</span>;</span><br><span class="line">sprite.<span class="property">y</span> = app.<span class="property">screen</span>.<span class="property">height</span> / <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在有了要展示的内容后，我们需要将它添加到画布中去。在 app 下，有一个 stage 属性，可以将 stage 理解为舞台，所有被添加到舞台中的东西都会渲染到 canvas 中去：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="property">stage</span>.<span class="title function_">addChild</span>(sprite);</span><br></pre></td></tr></table></figure>
+
+<p>最终效果看起来应该是这个样子：</p>
+<p><img src="/./images/pixi.js%20%E5%85%A5%E9%97%A8/Untitled%201.png"></p>
+<h1 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h1><p>接下来我们要让 sprite 响应事件。</p>
+<p>要想让 sprite 响应事件，首先需要将 sprite 的 interactive 属性置为 true：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 开启事件处理</span></span><br><span class="line">sprite.<span class="property">interactive</span> = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>一定要注意，只有将 sprite 的 interactive 属性置为 true 后，sprite 才能正常响应事件！</strong>！</p>
+<p>接下来我们给 sprite 绑定事件。</p>
+<p>在 pixi.js 中，给一个 sprite 绑定事件有两种方法。一种是通过 on 方法来绑定，一种是通过改变属性值直接绑定。在这里我们给 sprite 绑定一个点击事件，让 sprite 每次点击时都放大一点点：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 事件处理函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">onPointerDown</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">	      <span class="attr">_x</span>: x,</span><br><span class="line">	      <span class="attr">_y</span>: y,</span><br><span class="line">	  &#125; = sprite.<span class="property">scale</span>;</span><br><span class="line">	</span><br><span class="line">	  sprite.<span class="property">scale</span>.<span class="title function_">set</span>(x + <span class="number">0.1</span>, y + <span class="number">0.1</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定事件</span></span><br><span class="line"><span class="comment">// 方法一</span></span><br><span class="line">sprite.<span class="title function_">on</span>(<span class="string">&#x27;pointerdown&#x27;</span>, onPointerDown);</span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line">sprite.<span class="property">pointerdown</span> = onPointerDown;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/./images/pixi.js%20%E5%85%A5%E9%97%A8/ezgif.com-gif-maker.gif"></p>
+<h1 id="ticker"><a href="#ticker" class="headerlink" title="ticker"></a>ticker</h1><p>介绍完了事件绑定，还有一个很重要的内容，那就是如何让图像随着时间变化而变化。pixi.js 使用 Ticker 对象来完成这一功能，每一个放进 Ticker 的函数都会每秒被执行60次（随帧率变化）。</p>
+<p>在创建 app 的同时，我们也创建了一个 ticker，它就挂载在 app.ticker 上。在这里我们给 sprite 加上一个简单的旋转动画，让它随着时间变化而转动：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="property">ticker</span>.<span class="title function_">add</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    sprite.<span class="property">rotation</span> += <span class="number">0.1</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/./images/pixi.js%20%E5%85%A5%E9%97%A8/ezgif.com-gif-maker_(1).gif"></p>
+<p>完整示例参见这里：codesandbox 链接  <a target="_blank" rel="noopener" href="https://codesandbox.io/s/flamboyant-kate-6k1p8?file=/src/App.js">https://codesandbox.io/s/flamboyant-kate-6k1p8?file=/src/App.js</a></p>
+<h1 id="序列帧动画"><a href="#序列帧动画" class="headerlink" title="序列帧动画"></a>序列帧动画</h1><p>要实现序列帧动画，我们要使用 pixi.js 中一种特殊的 Sprite —— AnimatedSprite，也就是序列帧。</p>
+<p>要使用 AnimatedSprite，我们需要两样特殊的素材：</p>
+<ol>
+<li>把动画每一帧都聚合起来的图片</li>
+<li>表明每一帧在图片中的位置和大小的 json（这种 json 在 pixi.js 中被称为 <code>spritesheet</code>）</li>
+</ol>
+<p>幸运的是，我们并不需要手动聚合图片并确定每一帧的位置，甚至也不需要麻烦视觉同学，这两样素材都可以通过 <code>Free Texture Packer</code> 得到。 链接 <a target="_blank" rel="noopener" href="https://github.com/odrick/free-tex-packer">https://github.com/odrick/free-tex-packer</a></p>
+<h2 id="Free-Texture-Packer"><a href="#Free-Texture-Packer" class="headerlink" title="Free Texture Packer"></a>Free Texture Packer</h2><p>首先我们进入 Free Texture Packer 的官网，找到下载页：链接<a target="_blank" rel="noopener" href="http://free-tex-packer.com/download/">http://free-tex-packer.com/download/</a>，下载和系统对应的安装包，并根据引导安装。</p>
+<p><img src="/./images/pixi.js%20%E5%85%A5%E9%97%A8/%E6%88%AA%E5%B1%8F2021-08-31_%E4%B8%8B%E5%8D%882.54.44.png"></p>
+<p>打开应用界面，左侧为每一帧的单独切图的列表，中间为聚合后的图片效果，右侧为导出设置界面。我们已这次的掷骰子动画为例：</p>
+<p><img src="/./images/pixi.js%20%E5%85%A5%E9%97%A8/Untitled%202.png"></p>
+<p>点击导出按钮后，打开目标文件夹，会看到两个文件，分别是聚合后的图片和这张图片对应的 spritesheet.json。</p>
+<p><img src="/./images/pixi.js%20%E5%85%A5%E9%97%A8/WechatIMG49.jpeg"></p>
+<p>到这里，我们的前期准备工作就完成了，接下来要开始实现序列帧动画了。</p>
+<h2 id="序列帧动画-1"><a href="#序列帧动画-1" class="headerlink" title="序列帧动画"></a>序列帧动画</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sheet <span class="keyword">from</span> <span class="string">&#x27;spritesheet.json&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> dices <span class="keyword">from</span> <span class="string">&#x27;dices.png&#x27;</span>;</span><br><span class="line"></span><br><span class="line">app.<span class="property">loader</span></span><br><span class="line">    <span class="comment">// 加载图片</span></span><br><span class="line">    .<span class="title function_">add</span>(<span class="string">&#x27;dices&#x27;</span>, dices)</span><br><span class="line">    <span class="comment">// 资源加载完毕后的回调函数</span></span><br><span class="line">    .<span class="title function_">load</span>(<span class="function">(<span class="params">loader, resources</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 创建 spritesheet</span></span><br><span class="line">        <span class="keyword">const</span> spritesheet = <span class="keyword">new</span> <span class="variable constant_">PIXI</span>.<span class="title class_">Spritesheet</span>(resources.<span class="property">dices</span>.<span class="property">texture</span>, sheet);</span><br><span class="line">        <span class="comment">// 加载 spritesheet(当 spritesheet 内包含的帧数小于 1000 时, 该方法为同步的; 大于 1000 则为异步的)</span></span><br><span class="line">        spritesheet.<span class="title function_">parse</span>(<span class="function">() =&gt;</span> &#123;&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 骰子移动动画, 共 17 帧</span></span><br><span class="line">				<span class="keyword">const</span> diceMoveFrames = [];</span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">17</span>; i++) &#123;</span><br><span class="line">				    <span class="comment">// 此处 texture 的名字和 spritesheet.json 中每一帧的名字保持一致</span></span><br><span class="line">				    diceMoveFrames.<span class="title function_">push</span>(<span class="variable constant_">PIXI</span>.<span class="property">Texture</span>.<span class="title function_">from</span>(<span class="string">`<span class="subst">$&#123;i + <span class="number">1</span>&#125;</span>.png`</span>));</span><br><span class="line">				&#125;</span><br><span class="line">				</span><br><span class="line">				<span class="keyword">const</span> animtedSprite = <span class="keyword">new</span> <span class="variable constant_">PIXI</span>.<span class="title class_">AnimatedSprite</span>(diceMoveFrames);</span><br><span class="line">				</span><br><span class="line">				<span class="comment">// 是否循环播放</span></span><br><span class="line">				animtedSprite.<span class="property">loop</span> = <span class="literal">false</span>;</span><br><span class="line">				<span class="comment">// 播放速度, 数字越大播放速度越快</span></span><br><span class="line">				animtedSprite.<span class="property">animationSpeed</span> = <span class="number">0.2</span>;</span><br><span class="line">				animtedSprite.<span class="property">x</span> = app.<span class="property">screen</span>.<span class="property">width</span> / <span class="number">2</span>;</span><br><span class="line">				animtedSprite.<span class="property">y</span> = app.<span class="property">screen</span>.<span class="property">height</span> / <span class="number">2</span>;</span><br><span class="line">				</span><br><span class="line">				<span class="comment">// 开始播放</span></span><br><span class="line">				animtedSprite.<span class="title function_">gotoAndPlay</span>(<span class="number">0</span>);</span><br><span class="line">				</span><br><span class="line">				app.<span class="property">stage</span>.<span class="title function_">addChild</span>(animtedSprite);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/./images/pixi.js%20%E5%85%A5%E9%97%A8/ezgif.com-gif-maker%201.gif"></p>
+<p>完整示例在这里：<a target="_blank" rel="noopener" href="https://codesandbox.io/s/objective-kare-fxs9p?file=/src/App.js">https://codesandbox.io/s/objective-kare-fxs9p?file=/src/App.js</a></p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>这是一篇意外诞生的博客，写大富翁对外专栏的时候写多了，删了又不舍得，干脆放在这里吧。</p>
+
+  <p> — Sep 7, 2021</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>

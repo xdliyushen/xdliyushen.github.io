@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Minima -->
+  <!-- Hexo theme created by @adisaktijrs -->
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+
+  
+  <title>HTTP权威指南（三）：HTTP报文</title>
+  
+  <link rel="canonical" href="http://example.com/2022/01/06/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AHTTP%E6%8A%A5%E6%96%87/">
+  
+  <meta name="description" content="HTTP 报文的组成部分？HTTP 报文分为两类，一类是请求报文，一类是响应报文。二者的结构是相同的，都由三部分组成： 起始行、首部以及实体（可选）。 起始行和首部一起负责对报文进行描述；实体部分则包含了要传输的数据，可以为空。 起始行和首部每一行都以一个回车符和一个换行符为结尾，写作 CRLF。在">
+  
+  
+  <meta name="author" content="Mett Li">
+  
+  
+  
+  <meta property="og:site_name" content="Hexo" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="HTTP权威指南（三）：HTTP报文" />
+  
+  <meta property="og:description" content="HTTP 报文的组成部分？HTTP 报文分为两类，一类是请求报文，一类是响应报文。二者的结构是相同的，都由三部分组成： 起始行、首部以及实体（可选）。 起始行和首部一起负责对报文进行描述；实体部分则包含了要传输的数据，可以为空。 起始行和首部每一行都以一个回车符和一个换行符为结尾，写作 CRLF。在">
+  
+  <meta property="og:url" content="http://example.com/2022/01/06/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AHTTP%E6%8A%A5%E6%96%87/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HTTP权威指南（三）：HTTP报文">
+  
+  <meta name="twitter:description" content="HTTP 报文的组成部分？HTTP 报文分为两类，一类是请求报文，一类是响应报文。二者的结构是相同的，都由三部分组成： 起始行、首部以及实体（可选）。 起始行和首部一起负责对报文进行描述；实体部分则包含了要传输的数据，可以为空。 起始行和首部每一行都以一个回车符和一个换行符为结尾，写作 CRLF。在">
+  
+  
+  
+  
+  <meta name="twitter:url" content="http://example.com/2022/01/06/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AHTTP%E6%8A%A5%E6%96%87/" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Preload fonts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="preload" href="/fonts/dm-serif-display-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-v2-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  
+<link rel="stylesheet" href="/css/skeleton.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/prism-dark.css">
+
+  
+<link rel="stylesheet" href="/css/prism-line-numbers.css">
+
+  <!-- User css -->
+  
+  
+<link rel="stylesheet" href="/css/user.css">
+
+  
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Custom Theme Color Style
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <style>
+  a:not(.icon) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    background-color: #0FA0CE;
+    border-color: #0FA0CE;
+  }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #0FA0CE;
+  }
+</style>
+
+  <!-- Google Analytics (With Privacy Settings On)
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  
+
+  
+  <script src="/js/pic.min.js" defer></script>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+
+        <div class="row">
+  <div class="two columns" style="max-width: 50px">
+    <h1 class="mt-2 mode">
+      <div onclick=setDarkMode(true) id="darkBtn">🌑</div>
+      <div onclick=setDarkMode(false) id="lightBtn" class=hidden>☀️</div>
+      <script >
+        if (localStorage.getItem('preferredTheme') == 'dark') {
+          setDarkMode(true)
+        }
+        function setDarkMode(isDark) {
+          var darkBtn = document.getElementById('darkBtn')
+          var lightBtn = document.getElementById('lightBtn')
+          if (isDark) {
+            lightBtn.style.display = "block"
+            darkBtn.style.display = "none"
+            localStorage.setItem('preferredTheme', 'dark');
+          } else {
+            lightBtn.style.display = "none"
+            darkBtn.style.display = "block"
+            localStorage.removeItem('preferredTheme');
+          }
+          document.body.classList.toggle("darkmode");
+        }
+      </script>
+    </h1>
+  </div>
+
+  <div class="six columns ml-1">
+    <h1 class="mt-2">
+      小站
+    </h1>
+  </div>
+
+  <div class="twelve columns">
+    <div class="row">
+      <div class="nine columns left">
+        <a href="/">Home</a>
+        
+          
+          <a href="/About" class="ml">About</a>
+          
+        
+        
+          
+            <a href="mailto:xd842303863@163.com" target="_blank" class="ml">Email</a>
+          
+        
+      </div>
+    </div>
+    <hr style="margin-bottom: 2.6rem">
+  </div>
+</div>
+
+        <div class="trans">
+            <h2>HTTP权威指南（三）：HTTP报文</h2>
+
+  <h2 id="HTTP-报文的组成部分？"><a href="#HTTP-报文的组成部分？" class="headerlink" title="HTTP 报文的组成部分？"></a>HTTP 报文的组成部分？</h2><p>HTTP 报文分为两类，一类是<code>请求报文</code>，一类是<code>响应报文</code>。二者的结构是相同的，都由三部分组成： <code>起始行</code>、<code>首部</code>以及<code>实体（可选）</code>。</p>
+<p>起始行和首部一起负责对报文进行描述；实体部分则包含了要传输的数据，可以为空。</p>
+<p>起始行和首部每一行都以一个回车符和一个换行符为结尾，写作 CRLF。在首部和实体之间，包含一个空行（<code>CRLF</code>），作为首部结束的标志。<strong>即使报文没有实体部分，也应当在首部后面加一个空行。</strong></p>
+<h2 id="HTTP-报文的语法？"><a href="#HTTP-报文的语法？" class="headerlink" title="HTTP 报文的语法？"></a>HTTP 报文的语法？</h2><p>请求报文的语法为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;method&gt; &lt;request-URL&gt; &lt;version&gt;</span><br><span class="line">&lt;headers&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>响应报文的语法为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;version&gt; &lt;status&gt; &lt;reason-phrase&gt;</span><br><span class="line">&lt;headers&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，请求报文和响应报文的起始行不太一样。下面来挑一些说明下：</p>
+<ul>
+<li><p><code>版本号（version）</code> ：版本号为该报文使用的 HTTP 版本，遵循 HTTP&#x2F;x.y 的格式，常见的有的 HTTP&#x2F;1.1 和 HTTP&#x2F;2。另外还有一点值得说明，那就是 x.y 不能当做小数，在对比版本号的时候，需要把 x 和 y 分别当做单独的数字来处理。拿 HTTP&#x2F;1.3 和 HTTP&#x2F;1.22 为例，前者的版本号要比后者的小，因为 3 比 22 小。</p>
+<p>  目前很多网站都已经部署了 HTTP&#x2F;2，在 chrome 控制台的 protocol 一列中可以看到，h2 就代表 HTTP&#x2F;2 协议。</p>
+<p>  <img src="/./images/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AHTTP%E6%8A%A5%E6%96%87/Untitled.png"></p>
+<p>  关于 HTTP&#x2F;2 的详细说明可以参见这里：</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.notion.so/HTTP-HTTP2-4ab18e495b2e4e34a3e68931a908e663">HTTP 权威指南补充资料：HTTP2</a></p>
+</li>
+<li><p><code>原因短语（reason phrase）</code> ：原因短语总是和状态码一起出现，用于为状态码提供说明。这段文字只对人类有意义，对于机器毫无影响。</p>
+</li>
+<li><p><code>首部（headers）</code> ：首部的语法为 <code>key: value</code> 的形式，首部名后面跟冒号，然后是首部值，最后加上一个 CRLF。</p>
+<p>  为了提高可读性，常常将一个较长的首部分为好几行，多出来的每行前面都至少需要有一个空格或制表符（tab）。举个例子：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Server: Test Server</span><br><span class="line"> Version 1.0</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="HTTP-方法有哪些？"><a href="#HTTP-方法有哪些？" class="headerlink" title="HTTP 方法有哪些？"></a>HTTP 方法有哪些？</h2><p>首先需要说明一下 HTTP 方法的分类。HTTP 方法分为两类：<code>安全方法</code> 和 <code>不安全方法</code>。其中安全方法是指无副作用的方法，即无论执行多少次，结果都是一样的，如 GET 和 HEAD。不安全方法自然指有副作用的方法，如 POST、PUT 等。</p>
+<p>下面是详细的方法说明：</p>
+<ul>
+<li><p>GET：获取服务器上的某个资源。</p>
+</li>
+<li><p>HEAD：和 GET 类似，也是请求服务器上的某个资源，但只返回请求头部。</p>
+</li>
+<li><p>OPTIONS：询问服务器支持哪些方法。</p>
+</li>
+<li><p>POST：向服务器发送数据。</p>
+</li>
+<li><p>PUT：向服务器的文件中写入数据。</p>
+</li>
+<li><p>DELETE：删除某个文件。</p>
+</li>
+<li><p>TRACE：TRACE 方法用于查看当请求最终到达服务器的时候是什么样子的。由于一个请求常常要经过多个 web 程序，如网关、代理等，每个中间节点都可能会修改请求，因此需要 TRACE 方法来帮助诊断排查。</p>
+<p>  当请求到达服务器时，服务器会把收到的原始报文（包括起始行、首部和实体）原封不动地塞进响应报文的实体中，返回给客户端。</p>
+</li>
+<li><p>扩展方法（自定义方法）</p>
+</li>
+</ul>
+<h2 id="HTTP-状态码有哪些？"><a href="#HTTP-状态码有哪些？" class="headerlink" title="HTTP 状态码有哪些？"></a>HTTP 状态码有哪些？</h2><p>状态码分为五大类，从 1xx 到 5xx，分别对应不同的场景。下面是一些常见的状态码。</p>
+<ul>
+<li><p>1xx：信息性状态码。没啥常用的，不说了。</p>
+</li>
+<li><p>2xx：成功状态码。就一个 200 常用，也不说了。</p>
+</li>
+<li><p>3xx：重定向状态码。</p>
+<table>
+<thead>
+<tr>
+<th>301</th>
+<th>Moved Permaneltly</th>
+<th>资源已被永久移到了别的位置。在响应报文首部中的 Location 字段应当包含资源现在所在的位置，后续请求都应当使用新的 URL 来请求。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>302</td>
+<td>Found</td>
+<td>资源已被暂时移到了别的位置。和 301 类似，不同的是 302 要求客户端根据首部 Location 中 URL 暂时的定位资源，后续请求应当继续使用旧的 URL 来请求。</td>
+</tr>
+<tr>
+<td>304</td>
+<td>Not Modified</td>
+<td>资源未被修改，可以使用缓存版本代替。带有这个状态码的响应不应该包含实体部分。常常与一些缓存首部配合使用。</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>4xx：客户端错误状态码。</p>
+<table>
+<thead>
+<tr>
+<th>400</th>
+<th>Bad Request</th>
+<th>参数错误。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>告知客户端在进行进一步操作之前，需要首先进行认证。需要与一些首部配合使用。</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbiden</td>
+<td>请求被服务器拒绝了。这个状态码常常用于服务器不想说明是为什么拒绝的时候使用。比如客户端未认证的情况下，就可以返回 403。</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>未找到对应资源。</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>5xx：服务器错误状态码。</p>
+<table>
+<thead>
+<tr>
+<th>500</th>
+<th>Internal Server Error</th>
+<th>服务器错误。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>502</td>
+<td>Bad Gateway</td>
+<td>作为代理或网关的服务器从请求链路的下一级中收到了一个错误响应（如无法连接到网关）时，使用此状态码。</td>
+</tr>
+<tr>
+<td>504</td>
+<td>Gateway Timeout</td>
+<td>常常由网关或代理返回，它们在等待另一个服务器响应请求时超时了。</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id="HTTP-常见首部有哪些？"><a href="#HTTP-常见首部有哪些？" class="headerlink" title="HTTP 常见首部有哪些？"></a>HTTP 常见首部有哪些？</h2><p>首部分为五类：<code>通用首部</code>、<code>请求首部</code>、<code>响应首部</code>、<code>实体首部</code>以及<code>扩展首部</code>。</p>
+<h3 id="通用首部"><a href="#通用首部" class="headerlink" title="通用首部"></a>通用首部</h3><p>通用首部指请求报文和响应报文都能使用的首部。如 Date 就是通用首部。</p>
+<p>通用首部还包含<code>通用缓存首部</code>，这些首部处理缓存。如 Cache-Control 就是通用缓存首部。</p>
+<h3 id="请求首部"><a href="#请求首部" class="headerlink" title="请求首部"></a>请求首部</h3><p>请求首部指只能由请求报文使用的首部。如 Host、User-Agent 等。</p>
+<p>请求首部还包含如下四种首部：<code>Accept 首部</code>、<code>条件请求首部</code>、<code>安全请求首部</code>和<code>代理请求首部</code>。</p>
+<ul>
+<li>Accept 首部：告知服务器自己接受什么类型的数据。如 Accept、Accept-Language 等。</li>
+<li>条件请求首部：有时客户端需要为请求加上某些限制，这时候就需要用到条件请求首部。服务器在返回资源时，需要确保满足这些条件。如 Expect、Range（请求资源的范围） 等。</li>
+<li>安全请求首部：常常用于做安全认证。如 Cookie 等。</li>
+<li>代理请求首部：给代理使用的首部，用的比较少。如 Max-Forward（在通往源服务器的路径上，将请求转发给代理的最大此处，常和 TRACE 方法一起使用） 等。</li>
+</ul>
+<h3 id="响应首部"><a href="#响应首部" class="headerlink" title="响应首部"></a>响应首部</h3><p>响应首部指只能由响应报文使用的首部。如 Server（标识服务器应用程序的名称和版本，如 nginx）等。</p>
+<p>响应首部还包含<code>协商首部</code>和<code>安全响应首部</code>。</p>
+<ul>
+<li><p>协商首部：用于客户端和服务器协商响应。</p>
+<p>  举个例子，比如一个资源有两种语言的版本，一种中文，一种英文。这个时候就要用到协商首部来确定返回哪个版本。</p>
+<p>  最典型的协商首部，是 <code>Vary</code>。Vary 的本意是 v.变更，作为协商首部时，它表示服务器查看了哪些请求首部字段才做出的响应，如果有多个值，则应用逗号隔开。</p>
+<p>  接着用中英文资源举例。比如客户端想请求中文版本，而和语言最相关的首部是 Accept-Language，那么请求首部中 Accept-Language 就应该为 zh-CN；服务器收到请求后，根据 Accept-Language 返回中文版本，同时在响应首部中将 Vary 的值设为 Accept-Language，以告知客户端自己是如何做出返回中文版本这个判断的。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 请求报文首部</span></span><br><span class="line">...</span><br><span class="line">Accept-Language: zh-CN</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment"># 响应报文首部</span></span><br><span class="line">...</span><br><span class="line">Vary: Accept-Language</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>  同理，如果客户端想返回英文，则只需要将 Accept-Language 置为 en-US 即可。</p>
+</li>
+<li><p>安全响应首部：用于安全认证。如 Set-Cookie 等。</p>
+</li>
+</ul>
+<h3 id="实体首部"><a href="#实体首部" class="headerlink" title="实体首部"></a>实体首部</h3><p>实体首部指用来描述实体属性的首部。如 Location 等。</p>
+<p>实体首部还包含<code>内容首部</code>和<code>实体缓存首部</code>。</p>
+<ul>
+<li>内容首部：提供对内容属性的说明。如 Content-Length、Content-Language 等。</li>
+<li>实体缓存首部：提供实体与缓存相关的信息。如 ETag、Expires、Last-Modified 等。</li>
+</ul>
+<h3 id="扩展首部"><a href="#扩展首部" class="headerlink" title="扩展首部"></a>扩展首部</h3><p>拓展首部指不包含在 HTTP 规范内的自定义首部。即使不理解这些首部的意义，HTTP 应用程序也要对这些首部进行转发。</p>
+
+  <p><a class="classtest-link" href="/tags/HTTP/" rel="tag">HTTP</a> — Jan 6, 2022</p>
+  
+
+
+        </div>
+        <div class="row mt-2">
+  <h3>Search</h3>
+  <div><input id="search-text" title="search" class="search-text" type="text" placeholder="search......"></div>
+  <div style="margin-top: 1.5rem;">
+    <ul id="result"></ul>
+  </div>
+</div>
+        <div class="row mt-2">
+  
+    <div class="eight columns">
+      <p id="madewith">Made with ❤ and
+        <a class="footer-link icon" href="https://hexo.io" target="_blank" style="text-decoration: none;" rel="noreferrer" aria-label="Hexo.io">
+        <svg class="hexo svg-hov" width="14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Hexo.js</title><path d="M12 .007L1.57 6.056V18.05L12 23.995l10.43-6.049V5.952L12 .007zm4.798 17.105l-.939.521-.939-.521V12.94H9.08v4.172l-.94.521-.938-.521V6.89l.939-.521.939.521v4.172h5.84V6.89l.94-.521.938.521v10.222z"/></svg>
+        </a>
+        
+    </div>
+
+    <!-- Sepcial thanks to https://simpleicons.org/ for the icons -->
+    <div class="four columns mb-3 posisi" >
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="/js/nanobar.min.js"></script>
+
+  <script>
+    var options = {
+      classname: 'nanobar',
+      id: 'myNanobar'
+    };
+    var nanobar = new Nanobar(options);
+    nanobar.go(30);
+    nanobar.go(76);
+    nanobar.go(100);
+  </script>
+
+</body>
+
+</html>
